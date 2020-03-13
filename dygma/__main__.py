@@ -4,22 +4,15 @@
 
 import logging
 import serial
-import serial.tools.list_ports as list_ports
 from typing import List, Optional, Union
 
+from dygma import discover_ports
 from .layers import ALL_LAYERS
 
 logger = logging.getLogger(__name__)
 
-# hardware-dygma-raise-ansi/index.js
-DYGMA_VENDOR_ID = 0x1209
-DYGMA_PRODUCT_ID = 0x2201
-
-def select_port(): Optional[str]:
-    found_ports = list(filter(
-        lambda port: port.pid == DYGMA_PRODUCT_ID and port.vid == DYGMA_VENDOR_ID,
-        list_ports.comports()
-    ))
+def select_port() -> Optional[str]:
+    found_ports = discover_ports()
 
     if len(found_ports) == 0:
         raise Exception('Could not find any connected Dygma keyboards')
