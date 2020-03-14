@@ -1,9 +1,11 @@
 import logging
-from typing import List, Union
+from itertools import chain
+from typing import Iterable, List, Union
 
 import serial
 from serial.tools.list_ports_common import ListPortInfo
 
+from .keymap import get_keymap
 from .utils import Layer
 
 logger = logging.getLogger(__name__)
@@ -28,7 +30,10 @@ class DygmaConnection:
 
         self._send("settings.defaultLayer", False)
         self._send("keymap.onlyCustom", True)
-        # TODO: keymap.map
+
+        data = chain.from_iterable(get_keymap(layer) for layer in layers)
+
+        self._send("keymap.custom", data)
 
     def set_colormap(self, layers: List[Layer]):
         if len(layers) != 10:
@@ -39,8 +44,8 @@ class DygmaConnection:
 
     """Internal Methods"""
 
-    def _send(self, cmd: str, args: Union[DygmaArg, List[DygmaArg]]):
-        if not isinstance(args, list):
+    def _send(self, cmd: str, args: Union[DygmaArg, Iterable[DygmaArg]]):
+        if not isinstance(args, Iterable):
             args = [args]
 
         payload = " ".join([cmd] + [str(_from_arg(arg)) for arg in args])
