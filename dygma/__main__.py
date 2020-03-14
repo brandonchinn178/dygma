@@ -2,6 +2,7 @@
 
 """Sync keyboard with configuration files."""
 
+import argparse
 import logging
 from typing import Optional
 
@@ -33,16 +34,33 @@ def select_port() -> Optional[str]:
         return found_ports[selected]
 
 
+def sync(conn, config_file):
+    conn.set_keymap(ALL_LAYERS)
+    conn.set_colormap(ALL_LAYERS)
+
+
 def main():
-    print()
+    parser = argparse.ArgumentParser(description="Run actions using the Dygma API")
+    subparsers = parser.add_subparsers()
+
+    upload_parser = subparsers.add_parser(
+        "sync", help="Sync layer configuration with the keyboard"
+    )
+    upload_parser.add_argument(
+        "file", metavar="FILE", help="The path to the layer configuration file"
+    )
+    upload_parser.set_defaults(command="sync")
+
+    args = parser.parse_args()
 
     port = select_port()
     if port is None:
         return
 
     conn = DygmaConnection(port)
-    conn.set_keymap(ALL_LAYERS)
-    conn.set_colormap(ALL_LAYERS)
+
+    if args.command == "sync":
+        sync(conn, args.file)
 
 
 if __name__ == "__main__":
