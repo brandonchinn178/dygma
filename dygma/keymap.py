@@ -1,5 +1,6 @@
 from typing import List, Optional
 
+from .keycode import get_key_code
 from .utils import Key, Layer
 
 
