@@ -3,8 +3,6 @@
 from enum import Enum
 from typing import Mapping, NamedTuple, Optional
 
-Color = Enum("Color", ["BLUE", "YELLOW", "GREEN", "RED", "ORANGE", "BLACK"])
-
 
 class ColorRGB(NamedTuple):
     red: int
@@ -12,14 +10,7 @@ class ColorRGB(NamedTuple):
     blue: int
 
 
-PALETTE = {
-    Color.BLUE: ColorRGB(74, 144, 226),
-    Color.YELLOW: ColorRGB(248, 231, 28),
-    Color.GREEN: ColorRGB(65, 117, 5),
-    Color.RED: ColorRGB(208, 2, 27),
-    Color.ORANGE: ColorRGB(245, 166, 35),
-    Color.BLACK: ColorRGB(0, 0, 0),
-}
+COLOR_BLACK = ColorRGB(0, 0, 0)
 
 # fmt: off
 
@@ -303,19 +294,19 @@ class LayerKey(NamedTuple):
 
 class Layer(NamedTuple):
     # color of underglow and neuron
-    underglow: Color
+    underglow: ColorRGB
 
     # missing keys will be set to default_key
     key_map: Mapping[Key, LayerKey]
 
     # missing keys will be set to default_color
-    key_colors: Mapping[Key, Color]
+    key_colors: Mapping[Key, ColorRGB]
 
     # default key for missing key map
     default_key: LayerKey = LayerKey(LayerBaseKey.DISABLED)
 
     # default color for missing key colors
-    default_color: Color = Color.BLACK
+    default_color: ColorRGB = COLOR_BLACK
 
 
-EMPTY_LAYER = Layer(underglow=Color.BLACK, key_map={}, key_colors={})
+EMPTY_LAYER = Layer(underglow=COLOR_BLACK, key_map={}, key_colors={})

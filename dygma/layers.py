@@ -1,12 +1,30 @@
 # flake8: noqa
 # fmt: off
 
+from enum import Enum
+
 from .utils import *
 
 # TODO: do in configuration file?
 
+COLOR_BLUE = ColorRGB(74, 144, 226)
+COLOR_YELLOW = ColorRGB(248, 231, 28)
+COLOR_GREEN = ColorRGB(65, 117, 5)
+COLOR_RED = ColorRGB(208, 2, 27)
+COLOR_ORANGE = ColorRGB(245, 166, 35)
+COLOR_BLACK = ColorRGB(0, 0, 0)
+
+PALETTE = [
+    COLOR_BLUE,
+    COLOR_YELLOW,
+    COLOR_GREEN,
+    COLOR_RED,
+    COLOR_ORANGE,
+    COLOR_BLACK,
+]
+
 LAYER_0 = Layer(
-    underglow=Color.BLUE,
+    underglow=COLOR_BLUE,
     key_map={
         Key.ESC: LayerKey(LayerBaseKey.BACKTICK),
         Key.ONE: LayerKey(LayerBaseKey.ONE),
@@ -77,17 +95,17 @@ LAYER_0 = Layer(
         Key.RGUI: LayerKey(LayerBaseKey.RGUI),
         Key.RCTRL: LayerKey(LayerBaseKey.RCTRL),
     },
-    default_color=Color.BLUE,
+    default_color=COLOR_BLUE,
     key_colors={
-        Key.LSPACE_SW: Color.RED,
-        Key.LSPACE_SE: Color.YELLOW,
-        Key.RSPACE_SW: Color.YELLOW,
-        Key.RSPACE_SE: Color.RED,
+        Key.LSPACE_SW: COLOR_RED,
+        Key.LSPACE_SE: COLOR_YELLOW,
+        Key.RSPACE_SW: COLOR_YELLOW,
+        Key.RSPACE_SE: COLOR_RED,
     },
 )
 
 LAYER_1 = Layer(
-    underglow=Color.GREEN,
+    underglow=COLOR_GREEN,
     key_map={
         Key.TAB: LayerKey(LayerBaseKey.TAB, ctrl=True),
 
@@ -117,18 +135,18 @@ LAYER_1 = Layer(
         Key.RSPACE_NE: LayerKey(LayerBaseKey.TRANSPARENT),
     },
     key_colors={
-        Key.W: Color.ORANGE,
-        Key.S: Color.ORANGE,
-        Key.G: Color.ORANGE,
-        Key.E: Color.ORANGE,
-        Key.R: Color.ORANGE,
-        Key.D: Color.ORANGE,
-        Key.F: Color.ORANGE,
+        Key.W: COLOR_ORANGE,
+        Key.S: COLOR_ORANGE,
+        Key.G: COLOR_ORANGE,
+        Key.E: COLOR_ORANGE,
+        Key.R: COLOR_ORANGE,
+        Key.D: COLOR_ORANGE,
+        Key.F: COLOR_ORANGE,
 
-        Key.H: Color.GREEN,
-        Key.J: Color.GREEN,
-        Key.K: Color.GREEN,
-        Key.L: Color.GREEN,
+        Key.H: COLOR_GREEN,
+        Key.J: COLOR_GREEN,
+        Key.K: COLOR_GREEN,
+        Key.L: COLOR_GREEN,
     },
 )
 
