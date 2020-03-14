@@ -3,6 +3,8 @@ import serial
 from serial.tools.list_ports_common import ListPortInfo
 from typing import List, Union
 
+from .utils import Layer
+
 logger = logging.getLogger(__name__)
 
 DygmaArg = Union[int, bool]
@@ -17,6 +19,21 @@ class DygmaConnection:
     def __init__(self, port: Union[ListPortInfo, str]):
         device = port.device if isinstance(port, ListPortInfo) else port
         self._conn = serial.Serial(device)
+
+    def set_keymap(self, layers: List[Layer]):
+        if len(layers) != 10:
+            raise ValueError(f'{len(layers)} found, 10 layers required')
+
+        self._send('settings.defaultLayer', False)
+        self._send('keymap.onlyCustom', True)
+        # TODO: keymap.map
+
+    def set_colormap(self, layers: List[Layer]):
+        if len(layers) != 10:
+            raise ValueError(f'{len(layers)} found, 10 layers required')
+
+        # TODO: palette
+        # TODO: colormap.map
 
     ## Internal Methods ##
 

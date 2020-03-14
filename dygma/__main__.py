@@ -35,12 +35,12 @@ def main():
     print()
 
     port = select_port()
+    if port is None:
+        return
+
     conn = DygmaConnection(port)
-    conn._send('settings.defaultLayer', False)
-    conn._send('keymap.onlyCustom', True)
-    # TODO: keymap.map
-    # TODO: palette
-    # TODO: colormap.map
+    conn.set_keymap(ALL_LAYERS)
+    conn.set_colormap(ALL_LAYERS)
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
