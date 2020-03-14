@@ -4,11 +4,22 @@
 
 import argparse
 import logging
-from typing import Optional
+from typing import Callable, Optional, TypeVar
 
 from dygma import DygmaConnection, discover_ports
+from dygma.layers import ALL_LAYERS
 
-from .layers import ALL_LAYERS
+
+T = TypeVar("T")
+
+
+def prompt(cast: Callable[[str], T]) -> T:
+    while True:
+        s = input("> ")
+        try:
+            return cast(s)
+        except Exception:
+            pass
 
 
 def select_port() -> Optional[str]:
@@ -21,18 +32,18 @@ def select_port() -> Optional[str]:
 
         print(f"Found device: {port.device}")
         print(f"Use this device? [y/N]")
-        if input("> ").lower() != "y":
+        if prompt(lambda s: s.lower()) != "y":
             print("Exiting...")
             return None
         else:
-            return port
+            return port.device
     else:
         print("Select device:")
         for i, port in enumerate(found_ports):
             print(f"{i}. {port.device}")
 
-        selected = input("> ")
-        return found_ports[selected]
+        selected = prompt(int)
+        return found_ports[selected].device
 
 
 def sync(conn, config_file):

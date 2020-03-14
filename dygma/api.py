@@ -48,7 +48,7 @@ class DygmaConnection:
         self._conn.write(payload.encode("utf-8") + b"\n")
 
     def _recv(self) -> List[int]:
-        data = []
+        data = []  # type: List[int]
         while True:
             payload = self._conn.read_until().decode().rstrip()
             if payload == ".":
