@@ -1,3 +1,5 @@
+"""Discover ports that a Dygma keyboard is running on."""
+
 import logging
 from typing import List
 

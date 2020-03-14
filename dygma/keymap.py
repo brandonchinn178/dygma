@@ -1,3 +1,5 @@
+"""Generate the keymap specified in a Layer."""
+
 from typing import List, Optional
 
 from .keycode import get_key_code
@@ -5,6 +7,7 @@ from .utils import Key, Layer
 
 
 def get_keymap(layer: Layer) -> List[int]:
+    """Get the keymap specified in the given Layer."""
     return [_get_layer_key_code(layer, key) for key in KEY_MAP]
 
 

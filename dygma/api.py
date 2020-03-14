@@ -1,3 +1,5 @@
+"""Defines DygmaConnection, which can communicate with the Dygma keyboard."""
+
 import logging
 from itertools import chain
 from typing import Iterable, List, Union
@@ -21,19 +23,27 @@ class DygmaConnection:
     """
 
     def __init__(self, port: Union[ListPortInfo, str]):
+        """Initialize a DygmaConnection."""
         device = port.device if isinstance(port, ListPortInfo) else port
         self._conn = serial.Serial(device)
 
     def __del__(self):
+        """Close connection after a DygmaConnection is garbage collected."""
         self.close()
 
     def close(self):
+        """Close connection."""
         if hasattr(self, "_conn"):
             self._conn.close()
 
     """Dygma API"""
 
     def set_keymap(self, layers: List[Layer]):
+        """
+        Set the keymap to the key map specified in the given layers.
+
+        Requires exactly 10 layers to be provided.
+        """
         if len(layers) != 10:
             raise ValueError(f"{len(layers)} found, 10 layers required")
 
@@ -45,6 +55,11 @@ class DygmaConnection:
         self._send("keymap.custom", data)
 
     def set_colormap(self, layers: List[Layer]):
+        """
+        Set the color map to the color map specified in the given layers.
+
+        Requires exactly 10 layers to be provided.
+        """
         if len(layers) != 10:
             raise ValueError(f"{len(layers)} found, 10 layers required")
 

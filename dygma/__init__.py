@@ -1,3 +1,5 @@
+"""An API for communicating with a Dygma keyboard."""
+
 from .api import DygmaConnection
 from .discover import discover_ports
 

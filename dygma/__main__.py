@@ -14,6 +14,7 @@ T = TypeVar("T")
 
 
 def prompt(cast: Callable[[str], T]) -> T:
+    """Prompt the user for input with the given processing function."""
     while True:
         s = input("> ")
         try:
@@ -23,6 +24,7 @@ def prompt(cast: Callable[[str], T]) -> T:
 
 
 def select_port() -> Optional[str]:
+    """Find ports and prompt the user to choose or confirm one."""
     found_ports = discover_ports()
 
     if len(found_ports) == 0:
@@ -47,11 +49,13 @@ def select_port() -> Optional[str]:
 
 
 def sync(conn, config_file):
+    """Sync layer configuration with the keyboard."""
     conn.set_keymap(ALL_LAYERS)
     conn.set_colormap(ALL_LAYERS)
 
 
 def main():
+    """Run main function."""
     parser = argparse.ArgumentParser(description="Run actions using the Dygma API")
     subparsers = parser.add_subparsers()
 

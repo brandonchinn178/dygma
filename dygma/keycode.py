@@ -1,7 +1,10 @@
+"""Calculate key codes for layer keys."""
+
 from .utils import LayerBaseKey, LayerKey
 
 
 def get_key_code(layer_key: LayerKey) -> int:
+    """Get the key code for the given LayerKey."""
     key = layer_key.key
     code = KEY_CODES[key]
 
