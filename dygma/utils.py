@@ -94,65 +94,53 @@ LayerBaseKey = Enum("LayerBaseKey", [
     # Steno
 ])
 
-# fmt: on
+LAYER_KEY_CODES = {
+    LayerBaseKey.A: 4,
+    LayerBaseKey.B: 5,
+    LayerBaseKey.C: 6,
+    LayerBaseKey.D: 7,
+    LayerBaseKey.E: 8,
+    LayerBaseKey.F: 9,
+    LayerBaseKey.G: 10,
+    LayerBaseKey.H: 11,
+    LayerBaseKey.I: 12,
+    LayerBaseKey.J: 13,
+    LayerBaseKey.K: 14,
+    LayerBaseKey.L: 15,
+    LayerBaseKey.M: 16,
+    LayerBaseKey.N: 17,
+    LayerBaseKey.O: 18,
+    LayerBaseKey.P: 19,
+    LayerBaseKey.Q: 20,
+    LayerBaseKey.R: 21,
+    LayerBaseKey.S: 22,
+    LayerBaseKey.T: 23,
+    LayerBaseKey.U: 24,
+    LayerBaseKey.V: 25,
+    LayerBaseKey.W: 26,
+    LayerBaseKey.X: 27,
+    LayerBaseKey.Y: 28,
+    LayerBaseKey.Z: 29,
 
-
-class KeyData(NamedTuple):
-    key_code: int
-    label: str
-    extra_label: Optional[str] = None
-    verbose: Optional[str] = None
-
-
-# fmt: off
-
-LAYER_KEY_DATA = {
-    LayerBaseKey.A: KeyData(4, "A"),
-    LayerBaseKey.B: KeyData(5, "B"),
-    LayerBaseKey.C: KeyData(6, "C"),
-    LayerBaseKey.D: KeyData(7, "D"),
-    LayerBaseKey.E: KeyData(8, "E"),
-    LayerBaseKey.F: KeyData(9, "F"),
-    LayerBaseKey.G: KeyData(10, "G"),
-    LayerBaseKey.H: KeyData(11, "H"),
-    LayerBaseKey.I: KeyData(12, "I"),
-    LayerBaseKey.J: KeyData(13, "J"),
-    LayerBaseKey.K: KeyData(14, "K"),
-    LayerBaseKey.L: KeyData(15, "L"),
-    LayerBaseKey.M: KeyData(16, "M"),
-    LayerBaseKey.N: KeyData(17, "N"),
-    LayerBaseKey.O: KeyData(18, "O"),
-    LayerBaseKey.P: KeyData(19, "P"),
-    LayerBaseKey.Q: KeyData(20, "Q"),
-    LayerBaseKey.R: KeyData(21, "R"),
-    LayerBaseKey.S: KeyData(22, "S"),
-    LayerBaseKey.T: KeyData(23, "T"),
-    LayerBaseKey.U: KeyData(24, "U"),
-    LayerBaseKey.V: KeyData(25, "V"),
-    LayerBaseKey.W: KeyData(26, "W"),
-    LayerBaseKey.X: KeyData(27, "X"),
-    LayerBaseKey.Y: KeyData(28, "Y"),
-    LayerBaseKey.Z: KeyData(29, "Z"),
-
-    LayerBaseKey.ONE: KeyData(30, "1"),
-    LayerBaseKey.TWO: KeyData(31, "2"),
-    LayerBaseKey.THREE: KeyData(32, "3"),
-    LayerBaseKey.FOUR: KeyData(33, "4"),
-    LayerBaseKey.FIVE: KeyData(34, "5"),
-    LayerBaseKey.SIX: KeyData(35, "6"),
-    LayerBaseKey.SEVEN: KeyData(36, "7"),
-    LayerBaseKey.EIGHT: KeyData(37, "8"),
-    LayerBaseKey.NINE: KeyData(38, "9"),
-    LayerBaseKey.ZERO: KeyData(39, "0"),
-    LayerBaseKey.SPACE: KeyData(44, "SPACE"),
-    LayerBaseKey.ENTER: KeyData(40, "ENTER"),
-    LayerBaseKey.TAB: KeyData(43, "TAB"),
+    LayerBaseKey.ONE: 30,
+    LayerBaseKey.TWO: 31,
+    LayerBaseKey.THREE: 32,
+    LayerBaseKey.FOUR: 33,
+    LayerBaseKey.FIVE: 34,
+    LayerBaseKey.SIX: 35,
+    LayerBaseKey.SEVEN: 36,
+    LayerBaseKey.EIGHT: 37,
+    LayerBaseKey.NINE: 38,
+    LayerBaseKey.ZERO: 39,
+    LayerBaseKey.SPACE: 44,
+    LayerBaseKey.ENTER: 40,
+    LayerBaseKey.TAB: 43,
     # ESC
-    LayerBaseKey.BACKSPACE: KeyData(42, "BACKSPACE", verbose="Backspace"),
+    LayerBaseKey.BACKSPACE: 42,
     # DEL
     # INSERT
 
-    LayerBaseKey.F1: KeyData(58, "F1"),
+    LayerBaseKey.F1: 58,
     # F2
     # F3
     # F4
@@ -177,35 +165,35 @@ LAYER_KEY_DATA = {
     # F23
     # F24
 
-    LayerBaseKey.MINUS: KeyData(45, "-"),
-    LayerBaseKey.EQUAL: KeyData(46, "="),
-    LayerBaseKey.LBRACK: KeyData(47, "["),
-    LayerBaseKey.RBRACK: KeyData(48, "]"),
-    LayerBaseKey.BACKSLASH: KeyData(49, "\\"),
-    LayerBaseKey.SEMICOLON: KeyData(51, ";"),
-    LayerBaseKey.QUOTE: KeyData(52, "'"),
-    LayerBaseKey.BACKTICK: KeyData(53, "`"),
-    LayerBaseKey.COMMA: KeyData(54, ","),
-    LayerBaseKey.PERIOD: KeyData(55, "."),
-    LayerBaseKey.SLASH: KeyData(56, "/"),
-    LayerBaseKey.CAPS_LOCK: KeyData(57, "CAPSLOCK", verbose="Caps Lock"),
+    LayerBaseKey.MINUS: 45,
+    LayerBaseKey.EQUAL: 46,
+    LayerBaseKey.LBRACK: 47,
+    LayerBaseKey.RBRACK: 48,
+    LayerBaseKey.BACKSLASH: 49,
+    LayerBaseKey.SEMICOLON: 51,
+    LayerBaseKey.QUOTE: 52,
+    LayerBaseKey.BACKTICK: 53,
+    LayerBaseKey.COMMA: 54,
+    LayerBaseKey.PERIOD: 55,
+    LayerBaseKey.SLASH: 56,
+    LayerBaseKey.CAPS_LOCK: 57,
     # ALT_BACKSLASH
 
     # PAGE_UP
     # PAGE_DOWN
     # HOME
     # END
-    LayerBaseKey.LEFT: KeyData(80, "LEFT"),
-    LayerBaseKey.DOWN: KeyData(81, "DOWN"),
-    LayerBaseKey.UP: KeyData(82, "UP"),
-    LayerBaseKey.RIGHT: KeyData(79, "RIGHT"),
+    LayerBaseKey.LEFT: 80,
+    LayerBaseKey.DOWN: 81,
+    LayerBaseKey.UP: 82,
+    LayerBaseKey.RIGHT: 79,
     # APP
     # PRINT_SCREEN
     # SCROLL_LOCK
     # PAUSE
     # CYCLE
     # SYSTEM
-    LayerBaseKey.DISABLED: KeyData(0, "XXX", verbose="Disabled"),
+    LayerBaseKey.DISABLED: 0,
     # TRANSPARENT
 
     # NUM1
@@ -224,18 +212,18 @@ LAYER_KEY_DATA = {
     # NUM_PLUS
     # NUM_SLASH
 
-    LayerBaseKey.LCTRL: KeyData(224, "LEFT CTRL", verbose="Left Control"),
-    LayerBaseKey.LSHIFT: KeyData(225, "LEFT SHIFT", verbose="Left Shift"),
-    LayerBaseKey.LALT: KeyData(226, "LEFT ALT", verbose="Left Alt"),
-    LayerBaseKey.LGUI: KeyData(227, "LEFT GUI", verbose="Left Gui"),
-    LayerBaseKey.RCTRL: KeyData(228, "RIGHT CTRL", verbose="Right Control"),
-    LayerBaseKey.RSHIFT: KeyData(229, "RIGHT SHIFT", verbose="Right Shift"),
-    LayerBaseKey.RALT: KeyData(230, "RIGHT ALT", verbose="AltGr"),
-    LayerBaseKey.RGUI: KeyData(231, "RIGHT GUI", verbose="Right Gui"),
+    LayerBaseKey.LCTRL: 224,
+    LayerBaseKey.LSHIFT: 225,
+    LayerBaseKey.LALT: 226,
+    LayerBaseKey.LGUI: 227,
+    LayerBaseKey.RCTRL: 228,
+    LayerBaseKey.RSHIFT: 229,
+    LayerBaseKey.RALT: 230,
+    LayerBaseKey.RGUI: 231,
 
     # SHIFT0
-    LayerBaseKey.SHIFT1: KeyData(17451, "1", extra_label="SHIFTTO"),
-    LayerBaseKey.SHIFT2: KeyData(17452, "2", extra_label="SHIFTTO"),
+    LayerBaseKey.SHIFT1: 17451,
+    LayerBaseKey.SHIFT2: 17452,
     # SHIFT3
     # SHIFT4
     # SHIFT5
