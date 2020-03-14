@@ -24,7 +24,7 @@ PALETTE = [
 ]
 
 LAYER_0 = Layer(
-    underglow=COLOR_BLUE,
+    base_color=COLOR_BLUE,
     key_map={
         Key.ESC: LayerKey(LayerBaseKey.BACKTICK),
         Key.ONE: LayerKey(LayerBaseKey.ONE),
@@ -84,46 +84,39 @@ LAYER_0 = Layer(
         Key.LALT: LayerKey(LayerBaseKey.LALT),
         Key.LSPACE_NW: LayerKey(LayerBaseKey.LGUI),
         Key.LSPACE_NE: LayerKey(LayerBaseKey.SPACE),
-        Key.LSPACE_SW: LayerKey(LayerBaseKey.SHIFT2),
-        Key.LSPACE_SE: LayerKey(LayerBaseKey.SHIFT1),
+        Key.LSPACE_SW: LayerKey(LayerBaseKey.SHIFT2, color=COLOR_RED),
+        Key.LSPACE_SE: LayerKey(LayerBaseKey.SHIFT1, color=COLOR_YELLOW),
         Key.RSPACE_NW: LayerKey(LayerBaseKey.SPACE),
         Key.RSPACE_NE: LayerKey(LayerBaseKey.RGUI),
-        Key.RSPACE_SW: LayerKey(LayerBaseKey.SHIFT1),
-        Key.RSPACE_SE: LayerKey(LayerBaseKey.SHIFT2),
+        Key.RSPACE_SW: LayerKey(LayerBaseKey.SHIFT1, color=COLOR_YELLOW),
+        Key.RSPACE_SE: LayerKey(LayerBaseKey.SHIFT2, color=COLOR_RED),
         Key.RALT: LayerKey(LayerBaseKey.RALT),
         Key.FN: LayerKey(LayerBaseKey.F1),
         Key.RGUI: LayerKey(LayerBaseKey.RGUI),
         Key.RCTRL: LayerKey(LayerBaseKey.RCTRL),
     },
-    default_color=COLOR_BLUE,
-    key_colors={
-        Key.LSPACE_SW: COLOR_RED,
-        Key.LSPACE_SE: COLOR_YELLOW,
-        Key.RSPACE_SW: COLOR_YELLOW,
-        Key.RSPACE_SE: COLOR_RED,
-    },
 )
 
 LAYER_1 = Layer(
-    underglow=COLOR_GREEN,
+    base_color=COLOR_GREEN,
     key_map={
         Key.TAB: LayerKey(LayerBaseKey.TAB, ctrl=True),
 
         # spectacle fullscreen/half screens
-        Key.W: LayerKey(LayerBaseKey.UP, alt=True, gui=True),
-        Key.S: LayerKey(LayerBaseKey.LEFT, alt=True, gui=True),
-        Key.G: LayerKey(LayerBaseKey.RIGHT, alt=True, gui=True),
+        Key.W: LayerKey(LayerBaseKey.UP, color=COLOR_ORANGE, alt=True, gui=True),
+        Key.S: LayerKey(LayerBaseKey.LEFT, color=COLOR_ORANGE, alt=True, gui=True),
+        Key.G: LayerKey(LayerBaseKey.RIGHT, color=COLOR_ORANGE, alt=True, gui=True),
         # spectacle quarter screens
-        Key.E: LayerKey(LayerBaseKey.LEFT, ctrl=True, alt=True),
-        Key.R: LayerKey(LayerBaseKey.UP, ctrl=True, alt=True),
-        Key.D: LayerKey(LayerBaseKey.DOWN, ctrl=True, alt=True),
-        Key.F: LayerKey(LayerBaseKey.RIGHT, ctrl=True, alt=True),
+        Key.E: LayerKey(LayerBaseKey.LEFT, color=COLOR_ORANGE, ctrl=True, alt=True),
+        Key.R: LayerKey(LayerBaseKey.UP, color=COLOR_ORANGE, ctrl=True, alt=True),
+        Key.D: LayerKey(LayerBaseKey.DOWN, color=COLOR_ORANGE, ctrl=True, alt=True),
+        Key.F: LayerKey(LayerBaseKey.RIGHT, color=COLOR_ORANGE, ctrl=True, alt=True),
 
         # arrow keys
-        Key.H: LayerKey(LayerBaseKey.LEFT),
-        Key.J: LayerKey(LayerBaseKey.DOWN),
-        Key.K: LayerKey(LayerBaseKey.UP),
-        Key.L: LayerKey(LayerBaseKey.RIGHT),
+        Key.H: LayerKey(LayerBaseKey.LEFT, color=COLOR_GREEN),
+        Key.J: LayerKey(LayerBaseKey.DOWN, color=COLOR_GREEN),
+        Key.K: LayerKey(LayerBaseKey.UP, color=COLOR_GREEN),
+        Key.L: LayerKey(LayerBaseKey.RIGHT, color=COLOR_GREEN),
 
         Key.LSHIFT: LayerKey(LayerBaseKey.TRANSPARENT),
         Key.LCTRL: LayerKey(LayerBaseKey.TRANSPARENT),
@@ -133,20 +126,6 @@ LAYER_1 = Layer(
         Key.RCTRL: LayerKey(LayerBaseKey.TRANSPARENT),
         Key.RALT: LayerKey(LayerBaseKey.TRANSPARENT),
         Key.RSPACE_NE: LayerKey(LayerBaseKey.TRANSPARENT),
-    },
-    key_colors={
-        Key.W: COLOR_ORANGE,
-        Key.S: COLOR_ORANGE,
-        Key.G: COLOR_ORANGE,
-        Key.E: COLOR_ORANGE,
-        Key.R: COLOR_ORANGE,
-        Key.D: COLOR_ORANGE,
-        Key.F: COLOR_ORANGE,
-
-        Key.H: COLOR_GREEN,
-        Key.J: COLOR_GREEN,
-        Key.K: COLOR_GREEN,
-        Key.L: COLOR_GREEN,
     },
 )
 

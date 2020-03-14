@@ -283,6 +283,10 @@ LAYER_KEY_CODES = {
 
 class LayerKey(NamedTuple):
     key: LayerBaseKey
+    # defaults to color of underglow
+    color: Optional[ColorRGB] = None
+
+    # modifiers
     ctrl: bool = False
     shift: bool = False
     alt: bool = False
@@ -293,20 +297,15 @@ class LayerKey(NamedTuple):
 
 
 class Layer(NamedTuple):
-    # color of underglow and neuron
-    underglow: ColorRGB
+    # base color of the layer
+    # used for underglow, neuron, and LayerKeys without colors defined
+    base_color: ColorRGB
 
     # missing keys will be set to default_key
     key_map: Mapping[Key, LayerKey]
 
-    # missing keys will be set to default_color
-    key_colors: Mapping[Key, ColorRGB]
-
     # default key for missing key map
-    default_key: LayerKey = LayerKey(LayerBaseKey.DISABLED)
-
-    # default color for missing key colors
-    default_color: ColorRGB = COLOR_BLACK
+    default_key: LayerKey = LayerKey(LayerBaseKey.DISABLED, COLOR_BLACK)
 
 
-EMPTY_LAYER = Layer(underglow=COLOR_BLACK, key_map={}, key_colors={})
+EMPTY_LAYER = Layer(base_color=COLOR_BLACK, key_map={})
