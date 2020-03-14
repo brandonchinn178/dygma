@@ -1,7 +1,8 @@
 import logging
+from typing import List, Union
+
 import serial
 from serial.tools.list_ports_common import ListPortInfo
-from typing import List, Union
 
 from .utils import Layer
 
@@ -36,7 +37,7 @@ class DygmaConnection:
         # TODO: palette
         # TODO: colormap.map
 
-    ## Internal Methods ##
+    """Internal Methods"""
 
     def _send(self, cmd: str, args: Union[DygmaArg, List[DygmaArg]]):
         if not isinstance(args, list):

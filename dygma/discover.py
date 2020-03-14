@@ -1,7 +1,8 @@
 import logging
+from typing import List
+
 import serial.tools.list_ports as list_ports
 from serial.tools.list_ports_common import ListPortInfo
-from typing import List
 
 logger = logging.getLogger(__name__)
 

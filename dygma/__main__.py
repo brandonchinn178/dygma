@@ -7,6 +7,7 @@ import logging
 from typing import Optional
 
 from dygma import DygmaConnection, discover_ports
+
 from .layers import ALL_LAYERS
 
 
