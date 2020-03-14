@@ -1,3 +1,5 @@
+# fmt: off
+
 from .utils import *
 
 # TODO: do in configuration file?
