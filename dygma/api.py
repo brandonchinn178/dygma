@@ -52,14 +52,15 @@ class DygmaConnection:
         logger.debug(f"SEND: {payload}")
         self._conn.write(payload.encode("utf-8") + b"\n")
 
-    def _recv(self) -> List[int]:
         data = []  # type: List[int]
         while True:
-            payload = self._conn.read_until().decode().rstrip()
-            if payload == ".":
+            resp = self._conn.read_until().decode().rstrip()
+            logger.debug(f"RECV: {resp}")
+            if resp == ".":
                 break
             else:
-                data.extend(int(x) for x in payload.split())
+                data.extend(int(x) for x in resp.split())
+
         return data
 
 
