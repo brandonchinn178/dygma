@@ -24,6 +24,15 @@ class DygmaConnection:
         device = port.device if isinstance(port, ListPortInfo) else port
         self._conn = serial.Serial(device)
 
+    def __del__(self):
+        self.close()
+
+    def close(self):
+        if hasattr(self, "_conn"):
+            self._conn.close()
+
+    """Dygma API"""
+
     def set_keymap(self, layers: List[Layer]):
         if len(layers) != 10:
             raise ValueError(f"{len(layers)} found, 10 layers required")
@@ -44,8 +53,17 @@ class DygmaConnection:
 
     """Internal Methods"""
 
-    def _send(self, cmd: str, args: Union[DygmaArg, Iterable[DygmaArg]]):
-        if not isinstance(args, Iterable):
+    def _send(
+        self, cmd: str, args: Union[None, DygmaArg, Iterable[DygmaArg]] = None
+    ) -> List[int]:
+        """
+        Send the given command and arguments to the Dygma keyboard.
+
+        Returns data sent back by the keyboard.
+        """
+        if args is None:
+            args = []
+        elif not isinstance(args, Iterable):
             args = [args]
 
         payload = " ".join([cmd] + [str(_from_arg(arg)) for arg in args])
