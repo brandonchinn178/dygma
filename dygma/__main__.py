@@ -9,6 +9,8 @@ from typing import Callable, Optional, TypeVar
 from dygma import DygmaConnection, discover_ports, read_config
 
 
+logging.basicConfig(level=logging.DEBUG)
+
 T = TypeVar("T")
 
 
@@ -89,5 +91,4 @@ def main():
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
     main()
