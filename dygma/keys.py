@@ -12,7 +12,7 @@ Key = Enum("Key", [
     "TAB", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "LBRACK", "RBRACK", "BACKSLASH",
     "CAPS_LOCK", "A", "S", "D", "F", "G", "H", "J", "K", "L", "SEMICOLON", "QUOTE", "ENTER",
     "LSHIFT", "Z", "X", "C", "V", "B", "N", "M", "COMMA", "PERIOD", "SLASH", "RSHIFT",
-    "LCTRL", "LGUI", "LALT", "LSPACE_NW", "LSPACE_NE", "LSPACE_SW", "LSPACE_SE", "RSPACE_NW", "RSPACE_NE", "RSPACE_SW", "RSPACE_SE", "RALT", "FN", "RGUI", "RCTRL",
+    "LCTRL", "LGUI", "LALT", "LSPACE3", "LSPACE", "LSPACE2", "LSPACE1", "RSPACE", "RSPACE3", "RSPACE1", "RSPACE2", "RALT", "FN", "RGUI", "RCTRL",
 
     # Other keys
     "ALT_BACKSLASH",
