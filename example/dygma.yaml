@@ -89,22 +89,19 @@ layer0:
     LCTRL: LCTRL
     LGUI: LGUI
     LALT: LALT
-    LSPACE3:
-      key: SPACE
-      color: green
     LSPACE:
       key: SPACE
       color: green
-    LSPACE2:
-      key: BACKSPACE
-      color: blue
     LSPACE1:
       key: ENTER
       color: yellow
-    RSPACE:
+    LSPACE2:
+      key: BACKSPACE
+      color: blue
+    LSPACE3:
       key: SPACE
       color: green
-    RSPACE3:
+    RSPACE:
       key: SPACE
       color: green
     RSPACE1:
@@ -113,6 +110,9 @@ layer0:
     RSPACE2:
       key: DEL
       color: periwinkle
+    RSPACE3:
+      key: SPACE
+      color: green
     RALT: RALT
     RGUI: RGUI
     FN: LED_NEXT
