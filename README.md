@@ -7,7 +7,7 @@ WORK IN PROGRESS
 ## Installation
 
 ```bash
-pip install git+https://github.com/brandonchinn178/dygma-api.git@master
+pip install git+https://github.com/brandonchinn178/dygma.git@master
 ```
 
 ## Syncing keyboard
