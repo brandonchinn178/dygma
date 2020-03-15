@@ -52,11 +52,9 @@ LayerBaseKey = Enum("LayerBaseKey", [
 
     # Shift to Layer
     "SHIFT_TO_0", "SHIFT_TO_1", "SHIFT_TO_2", "SHIFT_TO_3", "SHIFT_TO_4", "SHIFT_TO_5", "SHIFT_TO_6", "SHIFT_TO_7", "SHIFT_TO_8", "SHIFT_TO_9",
-    "SHIFT_TO_10",
 
     # Lock layer
     "LOCK_TO_0", "LOCK_TO_1", "LOCK_TO_2", "LOCK_TO_3", "LOCK_TO_4", "LOCK_TO_5", "LOCK_TO_6", "LOCK_TO_7", "LOCK_TO_8", "LOCK_TO_9",
-    "LOCK_TO_10",
 
     # Media
     "MUTE", "TRACK_PLUS", "TRACK_MINUS", "STOP", "PLAY", "VOL_UP", "VOL_DOWN",
