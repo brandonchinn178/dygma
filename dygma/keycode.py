@@ -147,28 +147,26 @@ KEY_CODES = {
     LayerBaseKey.RSHIFT: 229,
     LayerBaseKey.RALT: 230,
     LayerBaseKey.RGUI: 231,
-    # SHIFT_TO_0
+    LayerBaseKey.SHIFT_TO_0: 17450,
     LayerBaseKey.SHIFT_TO_1: 17451,
     LayerBaseKey.SHIFT_TO_2: 17452,
-    # SHIFT_TO_3
-    # SHIFT_TO_4
-    # SHIFT_TO_5
-    # SHIFT_TO_6
-    # SHIFT_TO_7
-    # SHIFT_TO_8
-    # SHIFT_TO_9
-    # SHIFT_TO_10
-    # LOCK_0
+    LayerBaseKey.SHIFT_TO_3: 17453,
+    LayerBaseKey.SHIFT_TO_4: 17454,
+    LayerBaseKey.SHIFT_TO_5: 17455,
+    LayerBaseKey.SHIFT_TO_6: 17456,
+    LayerBaseKey.SHIFT_TO_7: 17457,
+    LayerBaseKey.SHIFT_TO_8: 17458,
+    LayerBaseKey.SHIFT_TO_9: 17459,
+    LayerBaseKey.LOCK_TO_0: 17408,
     LayerBaseKey.LOCK_TO_1: 17409,
-    # LOCK_2
-    # LOCK_3
-    # LOCK_4
-    # LOCK_5
-    # LOCK_6
-    # LOCK_7
-    # LOCK_8
-    # LOCK_9
-    # LOCK_10
+    LayerBaseKey.LOCK_TO_2: 17410,
+    LayerBaseKey.LOCK_TO_3: 17411,
+    LayerBaseKey.LOCK_TO_4: 17412,
+    LayerBaseKey.LOCK_TO_5: 17413,
+    LayerBaseKey.LOCK_TO_6: 17414,
+    LayerBaseKey.LOCK_TO_7: 17415,
+    LayerBaseKey.LOCK_TO_8: 17416,
+    LayerBaseKey.LOCK_TO_9: 17417,
     # MUTE
     # TRACK_PLUS
     # TRACK_MINUS
