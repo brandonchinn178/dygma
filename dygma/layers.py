@@ -3,7 +3,9 @@
 
 from enum import Enum
 
-from .utils import *
+from .color import Color
+from .keys import Key, LayerBaseKey
+from .layer import EMPTY_LAYER, Layer, LayerKey
 
 # TODO: do in configuration file?
 
@@ -15,12 +17,12 @@ COLOR_ORANGE = 'ORANGE'
 COLOR_BLACK = 'BLACK'
 
 PALETTE = [
-    ('BLUE', ColorRGB(74, 144, 226)),
-    ('YELLOW', ColorRGB(248, 231, 28)),
-    ('GREEN', ColorRGB(65, 117, 5)),
-    ('RED', ColorRGB(208, 2, 27)),
-    ('ORANGE', ColorRGB(245, 166, 35)),
-    ('BLACK', ColorRGB(0, 0, 0)),
+    ('BLUE', Color(74, 144, 226)),
+    ('YELLOW', Color(248, 231, 28)),
+    ('GREEN', Color(65, 117, 5)),
+    ('RED', Color(208, 2, 27)),
+    ('ORANGE', Color(245, 166, 35)),
+    ('BLACK', Color(0, 0, 0)),
 ]
 
 LAYER_0 = Layer(

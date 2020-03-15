@@ -7,13 +7,14 @@ from typing import Iterable, List, Tuple, Union
 import serial
 from serial.tools.list_ports_common import ListPortInfo
 
+from .color import Color
 from .colormap import get_colormap
 from .keymap import get_keymap
-from .utils import ColorRGB, Layer
+from .layer import Layer
 
 logger = logging.getLogger(__name__)
 
-ColorPalette = List[Tuple[str, ColorRGB]]
+ColorPalette = List[Tuple[str, Color]]
 DygmaArg = Union[int, bool]
 
 

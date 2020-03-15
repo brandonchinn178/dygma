@@ -3,7 +3,8 @@
 from typing import List, Optional
 
 from .keycode import get_key_code
-from .utils import Key, Layer
+from .keys import Key
+from .layer import Layer
 
 
 def get_keymap(layer: Layer) -> List[int]:
