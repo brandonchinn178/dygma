@@ -22,10 +22,6 @@ class LayerKey(NamedTuple):
     layer_shift_when_held: bool = False
 
 
-# TODO: make this configurable
-COLOR_BLACK = "BLACK"
-
-
 class Layer(NamedTuple):
     """Configuration for a layer in the keyboard."""
 
@@ -37,8 +33,7 @@ class Layer(NamedTuple):
     keymap: Mapping[Key, LayerKey]
 
     # default key for missing key map
-    default_key: LayerKey = LayerKey(LayerBaseKey.DISABLED, COLOR_BLACK)
+    default_key: LayerKey = LayerKey(LayerBaseKey.DISABLED, "black")
 
 
-# TODO: make this configurable
-EMPTY_LAYER = Layer(base_color=COLOR_BLACK, keymap={})
+EMPTY_LAYER = Layer(base_color="black", keymap={})
