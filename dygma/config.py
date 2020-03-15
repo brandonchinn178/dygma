@@ -1,6 +1,6 @@
 """Definitions for parsing a configuration file."""
 
-from typing import Dict, List, NamedTuple
+from typing import Dict, List, NamedTuple, Union
 
 import yaml
 
@@ -89,16 +89,44 @@ def parse_layer(raw_layer: Dict) -> Layer:
     for raw_key, raw_layer_key in raw_keymap.items():
         key = Key[raw_key]
 
-        if isinstance(raw_layer_key, str):
-            raw_layer_key = {"key": raw_layer_key}
-
-        if not isinstance(raw_layer_key, dict):
+        if not isinstance(raw_layer_key, (str, dict)):
             raise ValueError(f"Invalid value for {raw_key}: {raw_layer_key}")
 
-        if "key" not in raw_layer_key:
-            raise ValueError(f"Key {raw_key} does not specify a mapped key")
+        keymap[key] = parse_layer_key(raw_layer_key)
 
-        layer_base_key = LayerBaseKey[raw_layer_key.pop("key")]
-        keymap[key] = LayerKey(layer_base_key, **raw_layer_key)
+    options = {}
+    raw_default_key = raw_layer.get("default_key")
+    if raw_default_key is not None:
+        if not isinstance(raw_default_key, (str, dict)):
+            raise ValueError(f"Invalid value for 'default_key': {raw_default_key}")
 
-    return Layer(base_color, keymap)
+        options["default_key"] = parse_layer_key(raw_default_key)
+
+    return Layer(base_color, keymap, **options)
+
+
+def parse_layer_key(raw_layer_key: Union[str, Dict]) -> LayerKey:
+    """Parse a LayerKey."""
+    if isinstance(raw_layer_key, str):
+        raw_layer_key = {"key": raw_layer_key}
+
+    raw_key = raw_layer_key.get("key")
+    if raw_key is None:
+        raise ValueError(f"Key {raw_key} does not specify a mapped key")
+
+    layer_base_key = LayerBaseKey[raw_key]
+
+    options = {}
+    for option in (
+        "ctrl",
+        "alt",
+        "alt_gr",
+        "gui",
+        "modify_when_held",
+        "layer_shift_when_held",
+    ):
+        raw_option = raw_layer_key.get(option)
+        if raw_option is not None:
+            options[option] = raw_option
+
+    return LayerKey(layer_base_key, **options)
