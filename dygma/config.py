@@ -18,7 +18,7 @@ class Config(NamedTuple):
 
 def read_config(path: str) -> Config:
     """Parse a Config from the given file."""
-    raw_config = yaml.load(open(path))
+    raw_config = yaml.load(open(path), Loader=yaml.SafeLoader)
 
     if not isinstance(raw_config, dict):
         raise ValueError("Configuration needs to be an object")
