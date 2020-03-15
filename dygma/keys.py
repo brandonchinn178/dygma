@@ -47,12 +47,12 @@ LayerBaseKey = Enum("LayerBaseKey", [
     "LCTRL", "LSHIFT", "LALT", "LGUI", "RCTRL", "RSHIFT", "RALT", "RGUI",
 
     # Shift to Layer
-    "SHIFT0", "SHIFT1", "SHIFT2", "SHIFT3", "SHIFT4", "SHIFT5", "SHIFT6", "SHIFT7", "SHIFT8", "SHIFT9",
-    "SHIFT10",
+    "SHIFT_TO_0", "SHIFT_TO_1", "SHIFT_TO_2", "SHIFT_TO_3", "SHIFT_TO_4", "SHIFT_TO_5", "SHIFT_TO_6", "SHIFT_TO_7", "SHIFT_TO_8", "SHIFT_TO_9",
+    "SHIFT_TO_10",
 
     # Lock layer
-    "LOCK0", "LOCK1", "LOCK2", "LOCK3", "LOCK4", "LOCK5", "LOCK6", "LOCK7", "LOCK8", "LOCK9",
-    "LOCK10",
+    "LOCK_TO_0", "LOCK_TO_1", "LOCK_TO_2", "LOCK_TO_3", "LOCK_TO_4", "LOCK_TO_5", "LOCK_TO_6", "LOCK_TO_7", "LOCK_TO_8", "LOCK_TO_9",
+    "LOCK_TO_10",
 
     # Media
     "MUTE", "TRACK_PLUS", "TRACK_MINUS", "STOP", "PLAY", "VOL_UP", "VOL_DOWN",
@@ -64,7 +64,7 @@ LayerBaseKey = Enum("LayerBaseKey", [
     "LED_NEXT", "LED_PREV",
 
     # One shot layers
-    "ONE_SHOT0", "ONE_SHOT1", "ONE_SHOT2", "ONE_SHOT3", "ONE_SHOT4", "ONE_SHOT5", "ONE_SHOT6", "ONE_SHOT7",
+    "ONE_SHOT_0", "ONE_SHOT_1", "ONE_SHOT_2", "ONE_SHOT_3", "ONE_SHOT_4", "ONE_SHOT_5", "ONE_SHOT_6", "ONE_SHOT_7",
 
     # Leader
     "LEAD0", "LEAD1", "LEAD2", "LEAD3", "LEAD4", "LEAD5", "LEAD6", "LEAD7",

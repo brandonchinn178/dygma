@@ -147,28 +147,28 @@ KEY_CODES = {
     LayerBaseKey.RSHIFT: 229,
     LayerBaseKey.RALT: 230,
     LayerBaseKey.RGUI: 231,
-    # SHIFT0
-    LayerBaseKey.SHIFT1: 17451,
-    LayerBaseKey.SHIFT2: 17452,
-    # SHIFT3
-    # SHIFT4
-    # SHIFT5
-    # SHIFT6
-    # SHIFT7
-    # SHIFT8
-    # SHIFT9
-    # SHIFT10
-    # LOCK0
-    # LOCK1
-    # LOCK2
-    # LOCK3
-    # LOCK4
-    # LOCK5
-    # LOCK6
-    # LOCK7
-    # LOCK8
-    # LOCK9
-    # LOCK10
+    # SHIFT_TO_0
+    LayerBaseKey.SHIFT_TO_1: 17451,
+    LayerBaseKey.SHIFT_TO_2: 17452,
+    # SHIFT_TO_3
+    # SHIFT_TO_4
+    # SHIFT_TO_5
+    # SHIFT_TO_6
+    # SHIFT_TO_7
+    # SHIFT_TO_8
+    # SHIFT_TO_9
+    # SHIFT_TO_10
+    # LOCK_0
+    # LOCK_1
+    # LOCK_2
+    # LOCK_3
+    # LOCK_4
+    # LOCK_5
+    # LOCK_6
+    # LOCK_7
+    # LOCK_8
+    # LOCK_9
+    # LOCK_10
     # MUTE
     # TRACK_PLUS
     # TRACK_MINUS
@@ -186,14 +186,14 @@ KEY_CODES = {
     # ONE_RGUI
     # LED_NEXT
     # LED_PREV
-    # ONE_SHOT0
-    # ONE_SHOT1
-    # ONE_SHOT2
-    # ONE_SHOT3
-    # ONE_SHOT4
-    # ONE_SHOT5
-    # ONE_SHOT6
-    # ONE_SHOT7
+    # ONE_SHOT_0
+    # ONE_SHOT_1
+    # ONE_SHOT_2
+    # ONE_SHOT_3
+    # ONE_SHOT_4
+    # ONE_SHOT_5
+    # ONE_SHOT_6
+    # ONE_SHOT_7
     # LEAD0
     # LEAD1
     # LEAD2

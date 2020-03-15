@@ -4,7 +4,7 @@ from typing import Dict, List, NamedTuple
 
 import yaml
 
-from .color import Color, ColorPalette
+from .color import COLOR_BLACK, Color, ColorPalette
 from .keys import Key, LayerBaseKey
 from .layer import EMPTY_LAYER, Layer, LayerKey
 
@@ -37,8 +37,8 @@ def parse_config(raw_config: Dict) -> Config:
     palette = parse_palette(raw_palette)
 
     # black is needed for some defaults
-    if not any(name == "black" for name, _ in palette):
-        palette.append(("black", Color(0, 0, 0)))
+    if not any(name == COLOR_BLACK for name, _ in palette):
+        palette.append((COLOR_BLACK, Color(0, 0, 0)))
 
     layers = []
     for i in range(10):
