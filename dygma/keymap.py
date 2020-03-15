@@ -72,7 +72,7 @@ KEY_MAP = [
     Key.QUOTE,
     Key.BACKSLASH,
     Key.LSHIFT,
-    None,
+    Key.ALT_BACKSLASH,
     Key.Z,
     Key.X,
     Key.C,

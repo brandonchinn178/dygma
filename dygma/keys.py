@@ -7,11 +7,15 @@ from enum import Enum
 
 # The physical key on the keyboard
 Key = Enum("Key", [
+    # Standard ANSI keyboard
     "ESC", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "ZERO", "MINUS", "EQUAL", "BACKSPACE",
     "TAB", "Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "LBRACK", "RBRACK", "BACKSLASH",
     "CAPS_LOCK", "A", "S", "D", "F", "G", "H", "J", "K", "L", "SEMICOLON", "QUOTE", "ENTER",
     "LSHIFT", "Z", "X", "C", "V", "B", "N", "M", "COMMA", "PERIOD", "SLASH", "RSHIFT",
     "LCTRL", "LGUI", "LALT", "LSPACE_NW", "LSPACE_NE", "LSPACE_SW", "LSPACE_SE", "RSPACE_NW", "RSPACE_NE", "RSPACE_SW", "RSPACE_SE", "RALT", "FN", "RGUI", "RCTRL",
+
+    # Other keys
+    "ALT_BACKSLASH",
 ])
 
 # The key mapped in a given layer
