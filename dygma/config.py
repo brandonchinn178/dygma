@@ -117,6 +117,11 @@ def parse_layer_key(raw_layer_key: Union[str, Dict]) -> LayerKey:
     layer_base_key = LayerBaseKey[raw_key]
 
     options = {}
+
+    raw_color = raw_layer_key.get("color")
+    if raw_color is not None:
+        options["color"] = raw_color
+
     for option in (
         "ctrl",
         "alt",
