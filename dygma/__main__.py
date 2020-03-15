@@ -47,9 +47,16 @@ def select_port() -> Optional[str]:
         return found_ports[selected].device
 
 
-def sync(conn, config_file):
+def sync(config_file):
     """Sync layer configuration with the keyboard."""
     config = read_config(config_file)
+
+    port = select_port()
+    if port is None:
+        return
+
+    conn = DygmaConnection(port)
+
     conn.set_keymap(config.layers)
     conn.set_colormap(config.palette, config.layers)
 
@@ -69,14 +76,8 @@ def main():
 
     args = parser.parse_args()
 
-    port = select_port()
-    if port is None:
-        return
-
-    conn = DygmaConnection(port)
-
     if args.command == "sync":
-        sync(conn, args.file)
+        sync(args.file)
 
 
 if __name__ == "__main__":
