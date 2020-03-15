@@ -7,20 +7,20 @@ from .utils import *
 
 # TODO: do in configuration file?
 
-COLOR_BLUE = ColorRGB(74, 144, 226)
-COLOR_YELLOW = ColorRGB(248, 231, 28)
-COLOR_GREEN = ColorRGB(65, 117, 5)
-COLOR_RED = ColorRGB(208, 2, 27)
-COLOR_ORANGE = ColorRGB(245, 166, 35)
-COLOR_BLACK = ColorRGB(0, 0, 0)
+COLOR_BLUE = 'BLUE'
+COLOR_YELLOW = 'YELLOW'
+COLOR_GREEN = 'GREEN'
+COLOR_RED = 'RED'
+COLOR_ORANGE = 'ORANGE'
+COLOR_BLACK = 'BLACK'
 
 PALETTE = [
-    COLOR_BLUE,
-    COLOR_YELLOW,
-    COLOR_GREEN,
-    COLOR_RED,
-    COLOR_ORANGE,
-    COLOR_BLACK,
+    ('BLUE', ColorRGB(74, 144, 226)),
+    ('YELLOW', ColorRGB(248, 231, 28)),
+    ('GREEN', ColorRGB(65, 117, 5)),
+    ('RED', ColorRGB(208, 2, 27)),
+    ('ORANGE', ColorRGB(245, 166, 35)),
+    ('BLACK', ColorRGB(0, 0, 0)),
 ]
 
 LAYER_0 = Layer(

@@ -2,16 +2,18 @@
 
 import logging
 from itertools import chain
-from typing import Iterable, List, Union
+from typing import Iterable, List, Tuple, Union
 
 import serial
 from serial.tools.list_ports_common import ListPortInfo
 
+from .colormap import get_colormap
 from .keymap import get_keymap
-from .utils import Layer
+from .utils import ColorRGB, Layer
 
 logger = logging.getLogger(__name__)
 
+ColorPalette = List[Tuple[str, ColorRGB]]
 DygmaArg = Union[int, bool]
 
 
@@ -54,7 +56,7 @@ class DygmaConnection:
 
         self._send("keymap.custom", data)
 
-    def set_colormap(self, layers: List[Layer]):
+    def set_colormap(self, palette: ColorPalette, layers: List[Layer]):
         """
         Set the color map to the color map specified in the given layers.
 
@@ -63,8 +65,16 @@ class DygmaConnection:
         if len(layers) != 10:
             raise ValueError(f"{len(layers)} found, 10 layers required")
 
-        # TODO: palette
-        # TODO: colormap.map
+        color_palette = chain.from_iterable(
+            [color.red, color.green, color.blue] for _, color in palette
+        )
+        self._send("palette", color_palette)
+
+        all_colors = [color for color, _ in palette]
+        colormap = chain.from_iterable(
+            get_colormap(all_colors, layer) for layer in layers
+        )
+        self._send("colormap.map", colormap)
 
     """Internal Methods"""
 

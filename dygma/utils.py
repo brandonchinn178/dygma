@@ -10,8 +10,6 @@ class ColorRGB(NamedTuple):
     blue: int
 
 
-COLOR_BLACK = ColorRGB(0, 0, 0)
-
 # fmt: off
 
 # The physical key on the keyboard
@@ -90,8 +88,8 @@ LayerBaseKey = Enum("LayerBaseKey", [
 
 class LayerKey(NamedTuple):
     key: LayerBaseKey
-    # defaults to color of underglow
-    color: Optional[ColorRGB] = None
+    # defaults to layer's base_color
+    color: Optional[str] = None
 
     # modifiers
     ctrl: bool = False
@@ -103,10 +101,14 @@ class LayerKey(NamedTuple):
     layer_shift_when_held: bool = False
 
 
+# TODO: make this configurable
+COLOR_BLACK = "BLACK"
+
+
 class Layer(NamedTuple):
     # base color of the layer
     # used for underglow, neuron, and LayerKeys without colors defined
-    base_color: ColorRGB
+    base_color: str
 
     # missing keys will be set to default_key
     key_map: Mapping[Key, LayerKey]
