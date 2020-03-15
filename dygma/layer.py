@@ -2,6 +2,7 @@
 
 from typing import Mapping, NamedTuple, Optional
 
+from .color import COLOR_BLACK
 from .keys import Key, LayerBaseKey
 
 
@@ -33,7 +34,7 @@ class Layer(NamedTuple):
     keymap: Mapping[Key, LayerKey]
 
     # default key for missing key map
-    default_key: LayerKey = LayerKey(LayerBaseKey.DISABLED, "black")
+    default_key: LayerKey = LayerKey(LayerBaseKey.DISABLED, COLOR_BLACK)
 
 
-EMPTY_LAYER = Layer(base_color="black", keymap={})
+EMPTY_LAYER = Layer(base_color=COLOR_BLACK, keymap={})

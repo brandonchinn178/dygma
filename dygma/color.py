@@ -12,3 +12,5 @@ class Color(NamedTuple):
 
 
 ColorPalette = List[Tuple[str, Color]]
+
+COLOR_BLACK = "black"
