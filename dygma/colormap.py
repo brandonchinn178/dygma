@@ -49,7 +49,7 @@ KEY_MAP = [
     Key.F,
     Key.G,
     Key.LSHIFT,
-    None,
+    Key.ALT_BACKSLASH,
     Key.Z,
     Key.X,
     Key.C,

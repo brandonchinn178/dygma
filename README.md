@@ -17,7 +17,7 @@ and then uploading those layers to the keyboard. To do so, write a YAML file
 in the same format as `example/dygma.yaml` and run
 
 ```bash
-python -m dygma sync path/to/dygma.yaml
+dygma sync path/to/dygma.yaml
 ```
 
 ## API

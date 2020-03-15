@@ -1,0 +1,124 @@
+# To sync your keyboard with this configuration, run
+#
+#    dygma sync dygma.yaml
+
+# The color palette for your keyboard.
+#   * Maximum 14 colors allowed.
+#   * Each color should map to a list of 3 numbers, red/green/blue
+palette:
+  teal: [0, 255, 255]
+  green: [0, 255, 0]
+  blue: [0, 0, 255]
+  yellow: [255, 255, 0]
+  pink: [255, 100, 255]
+  periwinkle: [0, 153, 255]
+
+# For each layer, you can add the following properties:
+#
+#   base_color
+#     This color will be used for the underglow, the neuron, and for
+#     any key without an explicitly specified color.
+#
+#   keymap
+#     An object mapping physical keys (e.g. LSHIFT) to the key for the
+#     layer. Any missing keys here will be set to default_key.
+#     See https://github.com/brandonchinn178/dygma/blob/master/dygma/keys.py
+#
+#   default_key
+#     (Optional) If you don't specify anything, the default key will be
+#     DISABLED with a color of BLACK.
+#
+# Maximum 10 layers allowed.
+layer0:
+  base_color: teal
+  keymap:
+    ESC: ESC
+    ONE: ONE
+    TWO: TWO
+    THREE: THREE
+    FOUR: FOUR
+    FIVE: FIVE
+    SIX: SIX
+    SEVEN: SEVEN
+    EIGHT: EIGHT
+    NINE: NINE
+    ZERO: ZERO
+    MINUS: MINUS
+    EQUAL: EQUAL
+    BACKSPACE: BACKSPACE
+    TAB: TAB
+    Q: Q
+    W: W
+    E: E
+    R: R
+    T: T
+    Y: Y
+    U: U
+    I: I
+    O: O
+    P: P
+    LBRACK: LBRACK
+    RBRACK: RBRACK
+    ENTER: ENTER
+    CAPS_LOCK: CAPS_LOCK
+    A: A
+    S: S
+    D: D
+    F: F
+    G: G
+    H: H
+    J: J
+    K: K
+    L: L
+    SEMICOLON: SEMICOLON
+    QUOTE: QUOTE
+    BACKSLASH: BACKSLASH
+    LSHIFT: LSHIFT
+    ALT_BACKSLASH: ALT_BACKSLASH
+    Z: Z
+    X: X
+    C: C
+    V: V
+    B: B
+    N: N
+    M: M
+    COMMA: COMMA
+    PERIOD: PERIOD
+    SLASH: SLASH
+    RSHIFT: RSHIFT
+    LCTRL: LCTRL
+    LGUI: LGUI
+    LALT: LALT
+    LSPACE_NW:
+      key: SPACE
+      color: green
+    LSPACE_NE:
+      key: SPACE
+      color: green
+    LSPACE_SW:
+      key: BACKSPACE
+      color: blue
+    LSPACE_SE:
+      key: ENTER
+      color: yellow
+    RSPACE_NW:
+      key: SPACE
+      color: green
+    RSPACE_NE:
+      key: SPACE
+      color: green
+    RSPACE_SW:
+      key: LOCK_TO_1
+      color: pink
+    RSPACE_SE:
+      key: DEL
+      color: periwinkle
+    RALT: RALT
+    RGUI: RGUI
+    FN: LED_NEXT
+    RCTRL: RCTRL
+
+layer1:
+  base_color: green
+  keymap:
+    RSPACE_SW: LOCK_TO_1

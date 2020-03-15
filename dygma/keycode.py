@@ -67,9 +67,9 @@ KEY_CODES = {
     LayerBaseKey.SPACE: 44,
     LayerBaseKey.ENTER: 40,
     LayerBaseKey.TAB: 43,
-    # ESC
+    LayerBaseKey.ESC: 41,
     LayerBaseKey.BACKSPACE: 42,
-    # DEL
+    LayerBaseKey.DEL: 76,
     # INSERT
     LayerBaseKey.F1: 58,
     # F2
@@ -107,7 +107,7 @@ KEY_CODES = {
     LayerBaseKey.PERIOD: 55,
     LayerBaseKey.SLASH: 56,
     LayerBaseKey.CAPS_LOCK: 57,
-    # ALT_BACKSLASH
+    LayerBaseKey.ALT_BACKSLASH: 100,
     # PAGE_UP
     # PAGE_DOWN
     # HOME
@@ -159,7 +159,7 @@ KEY_CODES = {
     # SHIFT_TO_9
     # SHIFT_TO_10
     # LOCK_0
-    # LOCK_1
+    LayerBaseKey.LOCK_TO_1: 17409,
     # LOCK_2
     # LOCK_3
     # LOCK_4
@@ -184,7 +184,7 @@ KEY_CODES = {
     # ONE_RSHIFT
     # ONE_RALT
     # ONE_RGUI
-    # LED_NEXT
+    LayerBaseKey.LED_NEXT: 17152,
     # LED_PREV
     # ONE_SHOT_0
     # ONE_SHOT_1
