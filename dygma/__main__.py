@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Sync keyboard with configuration files."""
+"""Run Dygma CLI."""
 
 import argparse
 import logging
