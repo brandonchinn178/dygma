@@ -17,7 +17,7 @@ def _get_layer_key_color_code(
     if key is None:
         color = None
     else:
-        layer_key = layer.key_map.get(key, layer.default_key)
+        layer_key = layer.keymap.get(key, layer.default_key)
         color = layer_key.color
 
     if color is None:

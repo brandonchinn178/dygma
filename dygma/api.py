@@ -2,19 +2,18 @@
 
 import logging
 from itertools import chain
-from typing import Iterable, List, Tuple, Union
+from typing import Iterable, List, Union
 
 import serial
 from serial.tools.list_ports_common import ListPortInfo
 
-from .color import Color
+from .color import ColorPalette
 from .colormap import get_colormap
 from .keymap import get_keymap
 from .layer import Layer
 
 logger = logging.getLogger(__name__)
 
-ColorPalette = List[Tuple[str, Color]]
 DygmaArg = Union[int, bool]
 
 
