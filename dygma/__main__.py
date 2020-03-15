@@ -6,7 +6,7 @@ import argparse
 import logging
 from typing import Callable, Optional, TypeVar
 
-from dygma import DygmaConnection, discover_ports
+from dygma import DygmaConnection, discover_ports, read_config
 
 
 T = TypeVar("T")
@@ -49,11 +49,9 @@ def select_port() -> Optional[str]:
 
 def sync(conn, config_file):
     """Sync layer configuration with the keyboard."""
-    # TODO: use config file
-    from dygma.layers import ALL_LAYERS, PALETTE
-
-    conn.set_keymap(ALL_LAYERS)
-    conn.set_colormap(PALETTE, ALL_LAYERS)
+    config = read_config(config_file)
+    conn.set_keymap(config.layers)
+    conn.set_colormap(config.palette, config.layers)
 
 
 def main():

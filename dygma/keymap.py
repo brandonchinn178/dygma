@@ -16,7 +16,7 @@ def _get_layer_key_code(layer: Layer, key: Optional[Key]) -> int:
     if key is None:
         return 0
 
-    layer_key = layer.key_map.get(key, layer.default_key)
+    layer_key = layer.keymap.get(key, layer.default_key)
     return get_key_code(layer_key)
 
 

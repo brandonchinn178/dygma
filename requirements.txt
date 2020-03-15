@@ -1,1 +1,2 @@
 pyserial==3.4
+pyyaml==5.1

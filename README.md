@@ -14,10 +14,10 @@ pip install git+https://github.com/brandonchinn178/dygma-api.git@master
 
 The primary usage of this package is to configure your layers in YAML files
 and then uploading those layers to the keyboard. To do so, write a YAML file
-in the same format as `example/layers.yaml` and run
+in the same format as `example/dygma.yaml` and run
 
 ```bash
-python -m dygma sync path/to/layers.yaml
+python -m dygma sync path/to/dygma.yaml
 ```
 
 ## API
