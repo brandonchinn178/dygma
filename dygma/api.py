@@ -7,6 +7,8 @@ import serial
 from serial.tools.list_ports_common import ListPortInfo
 
 from .color import ColorPalette
+from .colormap import ColorMap
+from .keymap import KeyMap
 from .layer import Layer
 from .serialize import Serializable
 
@@ -38,6 +40,16 @@ class DygmaConnection:
 
     """Dygma API"""
 
+    def get_keymap(self) -> List[KeyMap]:
+        """Get the current keymap configured in the keyboard."""
+        data = self._send("keymap.custom")
+        keys_per_layer = len(data) // 10
+
+        return [
+            KeyMap.deserialize(keymap_data)
+            for keymap_data in _chunks(data, keys_per_layer)
+        ]
+
     def set_keymap(self, layers: List[Layer]):
         """
         Set the keymap to the key map specified in the given layers.
@@ -51,6 +63,16 @@ class DygmaConnection:
         self._send("keymap.onlyCustom", True)
 
         self._send("keymap.custom", [layer.get_keymap() for layer in layers])
+
+    def get_colormap(self, palette: ColorPalette) -> List[ColorMap]:
+        """Get the current colormap configured in the keyboard."""
+        data = self._send("colormap.map")
+        keys_per_layer = len(data) // 10
+
+        return [
+            ColorMap.deserialize(palette, colormap_data)
+            for colormap_data in _chunks(data, keys_per_layer)
+        ]
 
     def set_colormap(self, palette: ColorPalette, layers: List[Layer]):
         """
@@ -104,3 +126,10 @@ def _from_arg(arg: DygmaArg) -> List[int]:
         return [arg]
 
     return arg.serialize()
+
+
+def _chunks(arr: list, size: int) -> List[list]:
+    result = []
+    for i in range(0, len(arr), size):
+        result.append(arr[i : i + size])  # noqa: E203
+    return result
