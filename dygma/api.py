@@ -1,7 +1,6 @@
 """Defines DygmaConnection, which can communicate with the Dygma keyboard."""
 
 import logging
-from itertools import chain
 from typing import Iterable, List, Union
 
 import serial
@@ -62,10 +61,7 @@ class DygmaConnection:
         if len(layers) != 10:
             raise ValueError(f"{len(layers)} found, 10 layers required")
 
-        color_palette = chain.from_iterable(
-            [color.red, color.green, color.blue] for _, color in palette
-        )
-        self._send("palette", color_palette)
+        self._send("palette", palette)
 
         self._send("colormap.map", [layer.get_colormap(palette) for layer in layers])
 

@@ -40,17 +40,17 @@ class ColorMap(Serializable):
     @classmethod
     def deserialize(cls, palette: ColorPalette, data: List[int]) -> "ColorMap":
         """Initialize a ColorMap from a list of numbers sent from the Dygma API."""
-        colors = [color for color, _ in palette]
-
         return cls(
             palette,
-            {key: colors[x] for key, x in zip(KEY_MAP, data) if key is not None},
+            {
+                key: palette.colors[x]
+                for key, x in zip(KEY_MAP, data)
+                if key is not None
+            },
         )
 
     def serialize(self) -> List[int]:
         """Serialize this ColorMap into a list of numbers to send to the Dygma API."""
-        colors = [color for color, _ in self._palette]
-
         codes = []
         for key in KEY_MAP:
             if key is None:
@@ -59,7 +59,7 @@ class ColorMap(Serializable):
 
             color_name = self._color_map[key]
             try:
-                x = colors.index(color_name)
+                x = self._palette.colors.index(color_name)
             except IndexError:
                 raise ValueError(f"Unknown color: {color_name}")
 

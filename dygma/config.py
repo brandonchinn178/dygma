@@ -36,10 +36,6 @@ def parse_config(raw_config: Dict) -> Config:
 
     palette = parse_palette(raw_palette)
 
-    # black is needed for some defaults
-    if not any(name == COLOR_BLACK for name, _ in palette):
-        palette.append((COLOR_BLACK, Color(0, 0, 0)))
-
     layers = []
     for i in range(10):
         layer_name = f"layer{i}"
@@ -73,7 +69,11 @@ def parse_palette(raw_palette: Dict) -> ColorPalette:
         color = Color(*rgb)
         palette.append((name, color))
 
-    return palette
+    # black is needed for some defaults
+    if not any(name == COLOR_BLACK for name, _ in palette):
+        palette.append((COLOR_BLACK, Color(0, 0, 0)))
+
+    return ColorPalette(palette)
 
 
 def parse_layer(raw_layer: Dict) -> Layer:
