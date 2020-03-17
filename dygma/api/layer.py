@@ -69,6 +69,42 @@ class Layer(NamedTuple):
     # default key for missing key map
     default_key: ColoredLayerKey = ColoredLayerKey(LayerBaseKey.DISABLED, COLOR_BLACK)
 
+    @classmethod
+    def from_json(cls, value: Any) -> "Layer":
+        """Parse a Layer from the given JSON value."""
+        if not isinstance(value, dict):
+            raise ValueError(f"Layer needs to be an object")
+
+        base_color = value.get("base_color")
+        if base_color is None:
+            raise ValueError("Layer needs a base color")
+        if not isinstance(base_color, str):
+            raise ValueError("Key 'base_color' needs to be a string")
+
+        layer_map = {}
+        raw_keymap = value.get("keymap", {})
+        for raw_key, raw_layer_key in raw_keymap.items():
+            key = Key[raw_key]
+
+            try:
+                layer_key = ColoredLayerKey.from_json(raw_layer_key)
+            except ValueError as e:
+                raise ValueError(f"[{raw_key}] {e}")
+
+            layer_map[key] = layer_key
+
+        options = {}
+        raw_default_key = value.get("default_key")
+        if raw_default_key is not None:
+            try:
+                default_key = ColoredLayerKey.from_json(raw_default_key)
+            except ValueError as e:
+                raise ValueError(f"[default_key] {e}")
+
+            options["default_key"] = default_key
+
+        return cls(base_color, layer_map, **options)
+
     def get_keymap(self) -> KeyMap:
         """Get the KeyMap for this layer."""
         return KeyMap.from_layer(self.layer_map, self.default_key)
