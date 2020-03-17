@@ -3,6 +3,7 @@
 from typing import Mapping, NamedTuple
 
 from .color import COLOR_BLACK
+from .keymap import KeyMap
 from .keys import Key, LayerBaseKey, LayerKey
 
 
@@ -18,6 +19,10 @@ class Layer(NamedTuple):
 
     # default key for missing key map
     default_key: LayerKey = LayerKey(LayerBaseKey.DISABLED, COLOR_BLACK)
+
+    def get_keymap(self) -> KeyMap:
+        """Get the KeyMap for this layer."""
+        return KeyMap.from_layer(self.layer_map, self.default_key)
 
 
 EMPTY_LAYER = Layer(base_color=COLOR_BLACK, layer_map={})

@@ -9,7 +9,6 @@ from serial.tools.list_ports_common import ListPortInfo
 
 from .color import ColorPalette
 from .colormap import get_colormap
-from .keymap import get_keymap
 from .layer import Layer
 from .serialize import Serializable
 
@@ -53,9 +52,7 @@ class DygmaConnection:
         self._send("settings.defaultLayer", False)
         self._send("keymap.onlyCustom", True)
 
-        data = chain.from_iterable(get_keymap(layer) for layer in layers)
-
-        self._send("keymap.custom", data)
+        self._send("keymap.custom", [layer.get_keymap() for layer in layers])
 
     def set_colormap(self, palette: ColorPalette, layers: List[Layer]):
         """
