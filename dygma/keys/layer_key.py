@@ -21,6 +21,44 @@ class LayerKey(NamedTuple):
     modify_when_held: bool = False
     layer_shift_when_held: bool = False
 
+    @classmethod
+    def from_key_code(cls, code: int) -> "LayerKey":
+        """Initialize a LayerKey from the given key code."""
+        options = {}
+        base_code = code
+
+        # if a key fails this check, it's probably a special key
+        if code < 4096 * 2:
+            if base_code >= 4096:
+                options["gui"] = True
+                base_code -= 4096
+
+            if base_code >= 2048:
+                options["shift"] = True
+                base_code -= 2048
+
+            if base_code >= 1024:
+                options["alt_gr"] = True
+                base_code -= 1024
+
+            if base_code >= 512:
+                options["alt"] = True
+                base_code -= 512
+
+            if base_code >= 256:
+                options["ctrl"] = True
+                base_code -= 256
+
+        try:
+            key = KEY_CODES_REV[base_code]
+        except KeyError:
+            raise ValueError(
+                f"Could not deserialize key code: {base_code} (calculated from {code})"
+            )
+
+        # TODO: remove color
+        return cls(key, color=None, **options)
+
     def to_key_code(self) -> int:
         """Get the key code for this LayerKey."""
         key = self.key
@@ -220,3 +258,5 @@ KEY_CODES = {
     # CADET_ENABLE
     # CADET_DISABLE
 }
+
+KEY_CODES_REV = {code: key for key, code in KEY_CODES.items()}
