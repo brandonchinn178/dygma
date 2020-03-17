@@ -2,6 +2,8 @@
 
 """Setup this Python package."""
 
+import os
+import runpy
 from distutils.core import setup
 
 from setuptools import find_packages
@@ -11,7 +13,7 @@ def _read_file(f):
     return open(f).read().split("\n")
 
 
-VERSION = _read_file("VERSION")[0]
+VERSION = runpy.run_path(os.path.join("dygma", "version.py"))["__version__"]
 REQUIREMENTS = _read_file("requirements.txt")
 
 setup(
