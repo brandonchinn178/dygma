@@ -22,7 +22,7 @@ palette:
 #   keymap
 #     An object mapping physical keys (e.g. LSHIFT) to the key for the
 #     layer. Any missing keys here will be set to default_key.
-#     See https://github.com/brandonchinn178/dygma/blob/master/dygma/keys.py
+#     See https://github.com/brandonchinn178/dygma/blob/master/dygma/keys/enums.py
 #
 #   default_key
 #     (Optional) If you don't specify anything, the default key will be
