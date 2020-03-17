@@ -11,10 +11,11 @@ from .color import ColorPalette
 from .colormap import get_colormap
 from .keymap import get_keymap
 from .layer import Layer
+from .serialize import Serializable
 
 logger = logging.getLogger(__name__)
 
-DygmaArg = Union[int, bool]
+DygmaArg = Union[int, bool, Serializable]
 
 
 class DygmaConnection:
@@ -91,7 +92,7 @@ class DygmaConnection:
         elif not isinstance(args, Iterable):
             args = [args]
 
-        payload = " ".join([cmd] + [str(_from_arg(arg)) for arg in args])
+        payload = " ".join([cmd] + [str(x) for arg in args for x in _from_arg(arg)])
         logger.debug(f"SEND: {payload}")
         self._conn.write(payload.encode("utf-8") + b"\n")
 
@@ -107,11 +108,11 @@ class DygmaConnection:
         return data
 
 
-def _from_arg(arg: DygmaArg) -> int:
+def _from_arg(arg: DygmaArg) -> List[int]:
     if isinstance(arg, bool):
-        return 1 if arg else 0
+        return [1] if arg else [0]
 
     if isinstance(arg, int):
-        return arg
+        return [arg]
 
-    raise ValueError(f"Not a valid serial arg: {arg}")
+    return arg.serialize()
