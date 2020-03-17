@@ -32,5 +32,5 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
     ],
-    entry_points={"console_scripts": ["dygma = dygma.__main__:main"]},
+    entry_points={"console_scripts": ["dygma = dygma.cli:main"]},
 )
