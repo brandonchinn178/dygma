@@ -2,7 +2,6 @@
 
 from typing import List, Optional
 
-from .keycode import get_key_code
 from .keys import Key
 from .layer import Layer
 
@@ -16,8 +15,7 @@ def _get_layer_key_code(layer: Layer, key: Optional[Key]) -> int:
     if key is None:
         return 0
 
-    layer_key = layer.layer_map.get(key, layer.default_key)
-    return get_key_code(layer_key)
+    return layer.layer_map.get(key, layer.default_key).to_key_code()
 
 
 # The order of keys in a Dygma keymap
