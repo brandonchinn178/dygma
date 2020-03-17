@@ -2,7 +2,8 @@
 
 from typing import Mapping, NamedTuple
 
-from .color import COLOR_BLACK
+from .color import COLOR_BLACK, ColorPalette
+from .colormap import ColorMap
 from .keymap import KeyMap
 from .keys import Key, LayerBaseKey, LayerKey
 
@@ -23,6 +24,12 @@ class Layer(NamedTuple):
     def get_keymap(self) -> KeyMap:
         """Get the KeyMap for this layer."""
         return KeyMap.from_layer(self.layer_map, self.default_key)
+
+    def get_colormap(self, palette: ColorPalette) -> ColorMap:
+        """Get the ColorMap for this layer."""
+        return ColorMap.from_layer(
+            palette, self.layer_map, self.default_key, self.base_color
+        )
 
 
 EMPTY_LAYER = Layer(base_color=COLOR_BLACK, layer_map={})

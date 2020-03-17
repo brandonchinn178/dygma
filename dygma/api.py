@@ -8,7 +8,6 @@ import serial
 from serial.tools.list_ports_common import ListPortInfo
 
 from .color import ColorPalette
-from .colormap import get_colormap
 from .layer import Layer
 from .serialize import Serializable
 
@@ -68,11 +67,7 @@ class DygmaConnection:
         )
         self._send("palette", color_palette)
 
-        all_colors = [color for color, _ in palette]
-        colormap = chain.from_iterable(
-            get_colormap(all_colors, layer) for layer in layers
-        )
-        self._send("colormap.map", colormap)
+        self._send("colormap.map", [layer.get_colormap(palette) for layer in layers])
 
     """Internal Methods"""
 
