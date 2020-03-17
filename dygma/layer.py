@@ -31,10 +31,10 @@ class Layer(NamedTuple):
     base_color: str
 
     # missing keys will be set to default_key
-    keymap: Mapping[Key, LayerKey]
+    layer_map: Mapping[Key, LayerKey]
 
     # default key for missing key map
     default_key: LayerKey = LayerKey(LayerBaseKey.DISABLED, COLOR_BLACK)
 
 
-EMPTY_LAYER = Layer(base_color=COLOR_BLACK, keymap={})
+EMPTY_LAYER = Layer(base_color=COLOR_BLACK, layer_map={})

@@ -84,7 +84,7 @@ def parse_layer(raw_layer: Dict) -> Layer:
     if not isinstance(base_color, str):
         raise ValueError("Key 'base_color' needs to be a string")
 
-    keymap = {}
+    layer_map = {}
     raw_keymap = raw_layer.get("keymap", {})
     for raw_key, raw_layer_key in raw_keymap.items():
         key = Key[raw_key]
@@ -92,7 +92,7 @@ def parse_layer(raw_layer: Dict) -> Layer:
         if not isinstance(raw_layer_key, (str, dict)):
             raise ValueError(f"Invalid value for {raw_key}: {raw_layer_key}")
 
-        keymap[key] = parse_layer_key(raw_layer_key)
+        layer_map[key] = parse_layer_key(raw_layer_key)
 
     options = {}
     raw_default_key = raw_layer.get("default_key")
@@ -102,7 +102,7 @@ def parse_layer(raw_layer: Dict) -> Layer:
 
         options["default_key"] = parse_layer_key(raw_default_key)
 
-    return Layer(base_color, keymap, **options)
+    return Layer(base_color, layer_map, **options)
 
 
 def parse_layer_key(raw_layer_key: Union[str, Dict]) -> LayerKey:
