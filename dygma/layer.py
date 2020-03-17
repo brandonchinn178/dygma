@@ -1,26 +1,9 @@
 """Defines Layer, which contains information to configure a layer."""
 
-from typing import Mapping, NamedTuple, Optional
+from typing import Mapping, NamedTuple
 
 from .color import COLOR_BLACK
-from .keys import Key, LayerBaseKey
-
-
-class LayerKey(NamedTuple):
-    """Configuration for a specific key in a layer."""
-
-    key: LayerBaseKey
-    # defaults to layer's base_color
-    color: Optional[str] = None
-
-    # modifiers
-    ctrl: bool = False
-    shift: bool = False
-    alt: bool = False
-    alt_gr: bool = False
-    gui: bool = False
-    modify_when_held: bool = False
-    layer_shift_when_held: bool = False
+from .keys import Key, LayerBaseKey, LayerKey
 
 
 class Layer(NamedTuple):
