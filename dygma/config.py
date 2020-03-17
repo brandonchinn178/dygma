@@ -6,7 +6,7 @@ import yaml
 
 from .color import COLOR_BLACK, Color, ColorPalette
 from .keys import Key, LayerBaseKey
-from .layer import EMPTY_LAYER, Layer, LayerKey
+from .layer import ColoredLayerKey, EMPTY_LAYER, Layer
 
 
 class Config(NamedTuple):
@@ -35,10 +35,6 @@ def parse_config(raw_config: Dict) -> Config:
         raise ValueError("Key 'palette' needs to be an object")
 
     palette = parse_palette(raw_palette)
-
-    # black is needed for some defaults
-    if not any(name == COLOR_BLACK for name, _ in palette):
-        palette.append((COLOR_BLACK, Color(0, 0, 0)))
 
     layers = []
     for i in range(10):
@@ -73,7 +69,11 @@ def parse_palette(raw_palette: Dict) -> ColorPalette:
         color = Color(*rgb)
         palette.append((name, color))
 
-    return palette
+    # black is needed for some defaults
+    if not any(name == COLOR_BLACK for name, _ in palette):
+        palette.append((COLOR_BLACK, Color(0, 0, 0)))
+
+    return ColorPalette(palette)
 
 
 def parse_layer(raw_layer: Dict) -> Layer:
@@ -84,7 +84,7 @@ def parse_layer(raw_layer: Dict) -> Layer:
     if not isinstance(base_color, str):
         raise ValueError("Key 'base_color' needs to be a string")
 
-    keymap = {}
+    layer_map = {}
     raw_keymap = raw_layer.get("keymap", {})
     for raw_key, raw_layer_key in raw_keymap.items():
         key = Key[raw_key]
@@ -92,7 +92,7 @@ def parse_layer(raw_layer: Dict) -> Layer:
         if not isinstance(raw_layer_key, (str, dict)):
             raise ValueError(f"Invalid value for {raw_key}: {raw_layer_key}")
 
-        keymap[key] = parse_layer_key(raw_layer_key)
+        layer_map[key] = parse_layer_key(raw_layer_key)
 
     options = {}
     raw_default_key = raw_layer.get("default_key")
@@ -102,10 +102,10 @@ def parse_layer(raw_layer: Dict) -> Layer:
 
         options["default_key"] = parse_layer_key(raw_default_key)
 
-    return Layer(base_color, keymap, **options)
+    return Layer(base_color, layer_map, **options)
 
 
-def parse_layer_key(raw_layer_key: Union[str, Dict]) -> LayerKey:
+def parse_layer_key(raw_layer_key: Union[str, Dict]) -> ColoredLayerKey:
     """Parse a LayerKey."""
     if isinstance(raw_layer_key, str):
         raw_layer_key = {"key": raw_layer_key}
@@ -118,9 +118,7 @@ def parse_layer_key(raw_layer_key: Union[str, Dict]) -> LayerKey:
 
     options = {}
 
-    raw_color = raw_layer_key.get("color")
-    if raw_color is not None:
-        options["color"] = raw_color
+    color = raw_layer_key.get("color")
 
     for option in (
         "ctrl",
@@ -134,4 +132,4 @@ def parse_layer_key(raw_layer_key: Union[str, Dict]) -> LayerKey:
         if raw_option is not None:
             options[option] = raw_option
 
-    return LayerKey(layer_base_key, **options)
+    return ColoredLayerKey(layer_base_key, color, **options)

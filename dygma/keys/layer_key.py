@@ -1,30 +1,91 @@
-"""Calculate key codes for layer keys."""
+"""Defines Layer, which contains information to configure a layer."""
 
-from .keys import LayerBaseKey
-from .layer import LayerKey
+from .enums import LayerBaseKey
 
 
-def get_key_code(layer_key: LayerKey) -> int:
-    """Get the key code for the given LayerKey."""
-    key = layer_key.key
-    code = KEY_CODES[key]
+class LayerKey:
+    """Configuration for a specific key in a layer."""
 
-    if layer_key.ctrl:
-        code += 256
+    def __init__(
+        self,
+        key: LayerBaseKey,
+        *,
+        ctrl=False,
+        shift=False,
+        alt=False,
+        alt_gr=False,
+        gui=False,
+        modify_when_held=False,
+        layer_shift_when_held=False,
+    ):
+        """Initialize a LayerKey."""
+        self._key = key
+        self._ctrl = ctrl
+        self._shift = shift
+        self._alt = alt
+        self._alt_gr = alt_gr
+        self._gui = gui
+        self._modify_when_held = modify_when_held
+        self._layer_shift_when_held = layer_shift_when_held
 
-    if layer_key.alt:
-        code += 512
+    @classmethod
+    def from_key_code(cls, code: int) -> "LayerKey":
+        """Initialize a LayerKey from the given key code."""
+        options = {}
+        base_code = code
 
-    if layer_key.alt_gr:
-        code += 1024
+        # if a key fails this check, it's probably a special key
+        if code < 4096 * 2:
+            if base_code >= 4096:
+                options["gui"] = True
+                base_code -= 4096
 
-    if layer_key.shift:
-        code += 2048
+            if base_code >= 2048:
+                options["shift"] = True
+                base_code -= 2048
 
-    if layer_key.gui:
-        code += 4096
+            if base_code >= 1024:
+                options["alt_gr"] = True
+                base_code -= 1024
 
-    return code
+            if base_code >= 512:
+                options["alt"] = True
+                base_code -= 512
+
+            if base_code >= 256:
+                options["ctrl"] = True
+                base_code -= 256
+
+        try:
+            key = KEY_CODES_REV[base_code]
+        except KeyError:
+            raise ValueError(
+                f"Could not deserialize key code: {base_code} (calculated from {code})"
+            )
+
+        return cls(key, **options)
+
+    def to_key_code(self) -> int:
+        """Get the key code for this LayerKey."""
+        key = self._key
+        code = KEY_CODES[key]
+
+        if self._ctrl:
+            code += 256
+
+        if self._alt:
+            code += 512
+
+        if self._alt_gr:
+            code += 1024
+
+        if self._shift:
+            code += 2048
+
+        if self._gui:
+            code += 4096
+
+        return code
 
 
 KEY_CODES = {
@@ -203,3 +264,5 @@ KEY_CODES = {
     # CADET_ENABLE
     # CADET_DISABLE
 }
+
+KEY_CODES_REV = {code: key for key, code in KEY_CODES.items()}

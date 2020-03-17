@@ -1,29 +1,80 @@
 """Generate the color map specified by a palette and layer."""
 
-from typing import List, Optional
+from typing import List, Mapping, Optional
 
+from .color import ColorName, ColorPalette
 from .keys import Key
-from .layer import Layer
+from .serialize import Serializable
 
 
-def get_colormap(palette: List[str], layer: Layer) -> List[int]:
-    """Get the colormap as specified by the given palette and layer."""
-    return [_get_layer_key_color_code(palette, layer, key) for key in KEY_MAP]
+class ColorMap(Serializable):
+    """A mapping of physical keys to a color."""
 
+    def __init__(self, palette: ColorPalette, color_map: Mapping[Key, ColorName]):
+        """Initialize a ColorMap."""
+        self._palette = palette
+        self._color_map = color_map
 
-def _get_layer_key_color_code(
-    palette: List[str], layer: Layer, key: Optional[Key]
-) -> int:
-    if key is None:
-        color = None
-    else:
-        layer_key = layer.keymap.get(key, layer.default_key)
-        color = layer_key.color
+    @classmethod
+    def from_layer(
+        cls,
+        palette: ColorPalette,
+        layer_map: Mapping[Key, Optional[ColorName]],
+        default_color: ColorName,
+        missing_color: ColorName,
+    ) -> "ColorMap":
+        """
+        Initialize a ColorMap from a Layer.
 
-    if color is None:
-        color = layer.base_color
+        If the `layer_map` contains a Key mapped to None, then return the
+        `default_color`. If the `layer_map` does not contain a Key at all,
+        return the `missing_color`.
+        """
+        color_map = {}
+        for key in KEY_MAP:
+            if key is None:
+                continue
 
-    return palette.index(color)
+            if key in layer_map:
+                color = layer_map[key]
+                if color is None:
+                    color = default_color
+            else:
+                color = missing_color
+
+            color_map[key] = color
+
+        return cls(palette, color_map)
+
+    @classmethod
+    def deserialize(cls, palette: ColorPalette, data: List[int]) -> "ColorMap":
+        """Initialize a ColorMap from a list of numbers sent from the Dygma API."""
+        return cls(
+            palette,
+            {
+                key: palette.colors[x]
+                for key, x in zip(KEY_MAP, data)
+                if key is not None
+            },
+        )
+
+    def serialize(self) -> List[int]:
+        """Serialize this ColorMap into a list of numbers to send to the Dygma API."""
+        codes = []
+        for key in KEY_MAP:
+            if key is None:
+                codes.append(0)
+                continue
+
+            color_name = self._color_map[key]
+            try:
+                x = self._palette.colors.index(color_name)
+            except IndexError:
+                raise ValueError(f"Unknown color: {color_name}")
+
+            codes.append(x)
+
+        return codes
 
 
 # The order of keys in a Dygma color map

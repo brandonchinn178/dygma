@@ -2,25 +2,24 @@
 
 from typing import Mapping, NamedTuple, Optional
 
-from .color import COLOR_BLACK
-from .keys import Key, LayerBaseKey
+from .color import COLOR_BLACK, ColorName, ColorPalette
+from .colormap import ColorMap
+from .keymap import KeyMap
+from .keys import Key, LayerBaseKey, LayerKey
 
 
-class LayerKey(NamedTuple):
-    """Configuration for a specific key in a layer."""
+class ColoredLayerKey(LayerKey):
+    """A LayerKey with a color."""
 
-    key: LayerBaseKey
-    # defaults to layer's base_color
-    color: Optional[str] = None
+    def __init__(self, key: LayerBaseKey, color: Optional[ColorName], **kwargs):
+        """Initialize a ColoredLayerKey."""
+        self._color = color
+        super().__init__(key, **kwargs)
 
-    # modifiers
-    ctrl: bool = False
-    shift: bool = False
-    alt: bool = False
-    alt_gr: bool = False
-    gui: bool = False
-    modify_when_held: bool = False
-    layer_shift_when_held: bool = False
+    @property
+    def color(self) -> Optional[ColorName]:
+        """Get the color of the LayerKey."""
+        return self._color
 
 
 class Layer(NamedTuple):
@@ -31,10 +30,25 @@ class Layer(NamedTuple):
     base_color: str
 
     # missing keys will be set to default_key
-    keymap: Mapping[Key, LayerKey]
+    layer_map: Mapping[Key, ColoredLayerKey]
 
     # default key for missing key map
-    default_key: LayerKey = LayerKey(LayerBaseKey.DISABLED, COLOR_BLACK)
+    default_key: ColoredLayerKey = ColoredLayerKey(LayerBaseKey.DISABLED, COLOR_BLACK)
+
+    def get_keymap(self) -> KeyMap:
+        """Get the KeyMap for this layer."""
+        return KeyMap.from_layer(self.layer_map, self.default_key)
+
+    def get_colormap(self, palette: ColorPalette) -> ColorMap:
+        """Get the ColorMap for this layer."""
+        layer_map = {key: layer_key.color for key, layer_key in self.layer_map.items()}
+        default_color = self.base_color
+        missing_color = self.default_key.color
+
+        if missing_color is None:
+            missing_color = COLOR_BLACK
+
+        return ColorMap.from_layer(palette, layer_map, default_color, missing_color)
 
 
-EMPTY_LAYER = Layer(base_color=COLOR_BLACK, keymap={})
+EMPTY_LAYER = Layer(base_color=COLOR_BLACK, layer_map={})

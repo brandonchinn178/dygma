@@ -1,20 +1,20 @@
 """Defines DygmaConnection, which can communicate with the Dygma keyboard."""
 
 import logging
-from itertools import chain
 from typing import Iterable, List, Union
 
 import serial
 from serial.tools.list_ports_common import ListPortInfo
 
 from .color import ColorPalette
-from .colormap import get_colormap
-from .keymap import get_keymap
+from .colormap import ColorMap
+from .keymap import KeyMap
 from .layer import Layer
+from .serialize import Serializable
 
 logger = logging.getLogger(__name__)
 
-DygmaArg = Union[int, bool]
+DygmaArg = Union[int, bool, Serializable]
 
 
 class DygmaConnection:
@@ -40,6 +40,16 @@ class DygmaConnection:
 
     """Dygma API"""
 
+    def get_keymap(self) -> List[KeyMap]:
+        """Get the current keymap configured in the keyboard."""
+        data = self._send("keymap.custom")
+        keys_per_layer = len(data) // 10
+
+        return [
+            KeyMap.deserialize(keymap_data)
+            for keymap_data in _chunks(data, keys_per_layer)
+        ]
+
     def set_keymap(self, layers: List[Layer]):
         """
         Set the keymap to the key map specified in the given layers.
@@ -52,9 +62,17 @@ class DygmaConnection:
         self._send("settings.defaultLayer", False)
         self._send("keymap.onlyCustom", True)
 
-        data = chain.from_iterable(get_keymap(layer) for layer in layers)
+        self._send("keymap.custom", [layer.get_keymap() for layer in layers])
 
-        self._send("keymap.custom", data)
+    def get_colormap(self, palette: ColorPalette) -> List[ColorMap]:
+        """Get the current colormap configured in the keyboard."""
+        data = self._send("colormap.map")
+        keys_per_layer = len(data) // 10
+
+        return [
+            ColorMap.deserialize(palette, colormap_data)
+            for colormap_data in _chunks(data, keys_per_layer)
+        ]
 
     def set_colormap(self, palette: ColorPalette, layers: List[Layer]):
         """
@@ -65,16 +83,9 @@ class DygmaConnection:
         if len(layers) != 10:
             raise ValueError(f"{len(layers)} found, 10 layers required")
 
-        color_palette = chain.from_iterable(
-            [color.red, color.green, color.blue] for _, color in palette
-        )
-        self._send("palette", color_palette)
+        self._send("palette", palette)
 
-        all_colors = [color for color, _ in palette]
-        colormap = chain.from_iterable(
-            get_colormap(all_colors, layer) for layer in layers
-        )
-        self._send("colormap.map", colormap)
+        self._send("colormap.map", [layer.get_colormap(palette) for layer in layers])
 
     """Internal Methods"""
 
@@ -91,7 +102,7 @@ class DygmaConnection:
         elif not isinstance(args, Iterable):
             args = [args]
 
-        payload = " ".join([cmd] + [str(_from_arg(arg)) for arg in args])
+        payload = " ".join([cmd] + [str(x) for arg in args for x in _from_arg(arg)])
         logger.debug(f"SEND: {payload}")
         self._conn.write(payload.encode("utf-8") + b"\n")
 
@@ -107,11 +118,18 @@ class DygmaConnection:
         return data
 
 
-def _from_arg(arg: DygmaArg) -> int:
+def _from_arg(arg: DygmaArg) -> List[int]:
     if isinstance(arg, bool):
-        return 1 if arg else 0
+        return [1] if arg else [0]
 
     if isinstance(arg, int):
-        return arg
+        return [arg]
 
-    raise ValueError(f"Not a valid serial arg: {arg}")
+    return arg.serialize()
+
+
+def _chunks(arr: list, size: int) -> List[list]:
+    result = []
+    for i in range(0, len(arr), size):
+        result.append(arr[i : i + size])  # noqa: E203
+    return result

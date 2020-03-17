@@ -1,23 +1,44 @@
 """Generate the keymap specified in a Layer."""
 
-from typing import List, Optional
+from typing import List, Mapping
 
-from .keycode import get_key_code
-from .keys import Key
-from .layer import Layer
-
-
-def get_keymap(layer: Layer) -> List[int]:
-    """Get the keymap specified in the given Layer."""
-    return [_get_layer_key_code(layer, key) for key in KEY_MAP]
+from .keys import Key, LayerKey
+from .serialize import Serializable
 
 
-def _get_layer_key_code(layer: Layer, key: Optional[Key]) -> int:
-    if key is None:
-        return 0
+class KeyMap(Serializable):
+    """A mapping of physical keys to a LayerKey."""
 
-    layer_key = layer.keymap.get(key, layer.default_key)
-    return get_key_code(layer_key)
+    def __init__(self, key_map: Mapping[Key, LayerKey]):
+        """Initialize a KeyMap."""
+        self._key_map = key_map
+
+    @classmethod
+    def from_layer(
+        cls, layer_map: Mapping[Key, LayerKey], default_key: LayerKey
+    ) -> "KeyMap":
+        """Initialize a KeyMap from a Layer."""
+        return cls(
+            {key: layer_map.get(key, default_key) for key in KEY_MAP if key is not None}
+        )
+
+    @classmethod
+    def deserialize(cls, data: List[int]) -> "KeyMap":
+        """Initialize a KeyMap from a list of numbers sent from the Dygma API."""
+        return cls(
+            {
+                key: LayerKey.from_key_code(x)
+                for key, x in zip(KEY_MAP, data)
+                if key is not None
+            }
+        )
+
+    def serialize(self) -> List[int]:
+        """Serialize this KeyMap into a list of numbers to send to the Dygma API."""
+        return [
+            self._key_map[key].to_key_code() if key is not None else 0
+            for key in KEY_MAP
+        ]
 
 
 # The order of keys in a Dygma keymap
