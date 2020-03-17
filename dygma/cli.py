@@ -88,7 +88,3 @@ def main():
 
     if args.command == "sync":
         sync(args.file, args.yes)
-
-
-if __name__ == "__main__":
-    main()

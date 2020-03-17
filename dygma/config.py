@@ -4,9 +4,9 @@ from typing import Dict, List, NamedTuple, Union
 
 import yaml
 
-from .color import COLOR_BLACK, Color, ColorPalette
-from .keys import Key, LayerBaseKey
-from .layer import ColoredLayerKey, EMPTY_LAYER, Layer
+from .api.color import COLOR_BLACK, Color, ColorPalette
+from .api.keys import Key, LayerBaseKey
+from .api.layer import ColoredLayerKey, EMPTY_LAYER, Layer
 
 
 class Config(NamedTuple):
