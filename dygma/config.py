@@ -4,7 +4,7 @@ from typing import Any, Dict, List, NamedTuple, Union
 
 import yaml
 
-from .api.color import COLOR_BLACK, Color, ColorPalette
+from .api.color import ColorPalette
 from .api.keys import Key, LayerBaseKey
 from .api.layer import ColoredLayerKey, EMPTY_LAYER, Layer
 
@@ -24,10 +24,7 @@ class Config(NamedTuple):
         raw_palette = value.get("palette")
         if raw_palette is None:
             raise ValueError("Configuration needs a color palette")
-        if not isinstance(raw_palette, dict):
-            raise ValueError("Key 'palette' needs to be an object")
-
-        palette = parse_palette(raw_palette)
+        palette = ColorPalette.from_json(raw_palette)
 
         layers = []
         for i in range(10):
@@ -49,30 +46,6 @@ def read_config(path: str) -> Config:
     """Parse a Config from the given file."""
     raw_config = yaml.load(open(path), Loader=yaml.SafeLoader)
     return Config.from_json(raw_config)
-
-
-def parse_palette(raw_palette: Dict) -> ColorPalette:
-    """Parse a ColorPalette from the given object."""
-    palette = []
-
-    for name, rgb in raw_palette.items():
-        if (
-            not isinstance(rgb, list)
-            or len(rgb) != 3
-            or not all(isinstance(x, int) for x in rgb)
-        ):
-            raise ValueError(
-                f"Color needs to be defined as a list of RGB values: {name}"
-            )
-
-        color = Color(*rgb)
-        palette.append((name, color))
-
-    # black is needed for some defaults
-    if not any(name == COLOR_BLACK for name, _ in palette):
-        palette.append((COLOR_BLACK, Color(0, 0, 0)))
-
-    return ColorPalette(palette)
 
 
 def parse_layer(raw_layer: Dict) -> Layer:
