@@ -6,7 +6,9 @@ import argparse
 import logging
 from typing import Callable, Optional, TypeVar
 
-from dygma import DygmaConnection, discover_ports, read_config
+from .api import DygmaConnection
+from .config import read_config
+from .discover import discover_ports
 
 
 logging.basicConfig(level=logging.DEBUG)
