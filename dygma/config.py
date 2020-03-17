@@ -1,6 +1,6 @@
 """Definitions for parsing a configuration file."""
 
-from typing import Dict, List, NamedTuple, Union
+from typing import Any, Dict, List, NamedTuple, Union
 
 import yaml
 
@@ -15,41 +15,40 @@ class Config(NamedTuple):
     palette: ColorPalette
     layers: List[Layer]
 
+    @classmethod
+    def from_json(cls, value: Any) -> "Config":
+        """Parse a Config from a JSON value."""
+        if not isinstance(value, dict):
+            raise ValueError("Configuration needs to be an object")
+
+        raw_palette = value.get("palette")
+        if raw_palette is None:
+            raise ValueError("Configuration needs a color palette")
+        if not isinstance(raw_palette, dict):
+            raise ValueError("Key 'palette' needs to be an object")
+
+        palette = parse_palette(raw_palette)
+
+        layers = []
+        for i in range(10):
+            layer_name = f"layer{i}"
+            raw_layer = value.get(layer_name)
+            if raw_layer is None:
+                layer = EMPTY_LAYER
+            elif not isinstance(raw_layer, dict):
+                raise ValueError(f"Key '{layer_name}' needs to be an object")
+            else:
+                layer = parse_layer(raw_layer)
+
+            layers.append(layer)
+
+        return cls(palette, layers)
+
 
 def read_config(path: str) -> Config:
     """Parse a Config from the given file."""
     raw_config = yaml.load(open(path), Loader=yaml.SafeLoader)
-
-    if not isinstance(raw_config, dict):
-        raise ValueError("Configuration needs to be an object")
-
-    return parse_config(raw_config)
-
-
-def parse_config(raw_config: Dict) -> Config:
-    """Parse a Config from the given object."""
-    raw_palette = raw_config.get("palette")
-    if raw_palette is None:
-        raise ValueError("Configuration needs a color palette")
-    if not isinstance(raw_palette, dict):
-        raise ValueError("Key 'palette' needs to be an object")
-
-    palette = parse_palette(raw_palette)
-
-    layers = []
-    for i in range(10):
-        layer_name = f"layer{i}"
-        raw_layer = raw_config.get(layer_name)
-        if raw_layer is None:
-            layer = EMPTY_LAYER
-        elif not isinstance(raw_layer, dict):
-            raise ValueError(f"Key '{layer_name}' needs to be an object")
-        else:
-            layer = parse_layer(raw_layer)
-
-        layers.append(layer)
-
-    return Config(palette, layers)
+    return Config.from_json(raw_config)
 
 
 def parse_palette(raw_palette: Dict) -> ColorPalette:
