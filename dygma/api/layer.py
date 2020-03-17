@@ -1,6 +1,6 @@
 """Defines Layer, which contains information to configure a layer."""
 
-from typing import Mapping, NamedTuple, Optional
+from typing import Any, Mapping, NamedTuple, Optional
 
 from .color import COLOR_BLACK, ColorName, ColorPalette
 from .colormap import ColorMap
@@ -15,6 +15,40 @@ class ColoredLayerKey(LayerKey):
         """Initialize a ColoredLayerKey."""
         self._color = color
         super().__init__(key, **kwargs)
+
+    @classmethod
+    def from_json(cls, value: Any) -> "ColoredLayerKey":
+        """Parse a ColoredLayerKey from a JSON value."""
+        if isinstance(value, str):
+            raw_layer_key = {"key": value}
+        elif isinstance(value, dict):
+            raw_layer_key = value
+        else:
+            raise ValueError("Invalid layer key")
+
+        raw_key = raw_layer_key.get("key")
+        if raw_key is None:
+            raise ValueError(f"Missing layer key")
+
+        layer_base_key = LayerBaseKey[raw_key]
+
+        options = {}
+
+        color = raw_layer_key.get("color")
+
+        for option in (
+            "ctrl",
+            "alt",
+            "alt_gr",
+            "gui",
+            "modify_when_held",
+            "layer_shift_when_held",
+        ):
+            raw_option = raw_layer_key.get(option)
+            if raw_option is not None:
+                options[option] = raw_option
+
+        return cls(layer_base_key, color, **options)
 
     @property
     def color(self) -> Optional[ColorName]:

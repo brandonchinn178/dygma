@@ -1,11 +1,11 @@
 """Definitions for parsing a configuration file."""
 
-from typing import Any, Dict, List, NamedTuple, Union
+from typing import Any, Dict, List, NamedTuple
 
 import yaml
 
 from .api.color import ColorPalette
-from .api.keys import Key, LayerBaseKey
+from .api.keys import Key
 from .api.layer import ColoredLayerKey, EMPTY_LAYER, Layer
 
 
@@ -61,47 +61,21 @@ def parse_layer(raw_layer: Dict) -> Layer:
     for raw_key, raw_layer_key in raw_keymap.items():
         key = Key[raw_key]
 
-        if not isinstance(raw_layer_key, (str, dict)):
-            raise ValueError(f"Invalid value for {raw_key}: {raw_layer_key}")
+        try:
+            layer_key = ColoredLayerKey.from_json(raw_layer_key)
+        except ValueError as e:
+            raise ValueError(f"[{raw_key}] {e}")
 
-        layer_map[key] = parse_layer_key(raw_layer_key)
+        layer_map[key] = layer_key
 
     options = {}
     raw_default_key = raw_layer.get("default_key")
     if raw_default_key is not None:
-        if not isinstance(raw_default_key, (str, dict)):
-            raise ValueError(f"Invalid value for 'default_key': {raw_default_key}")
+        try:
+            default_key = ColoredLayerKey.from_json(raw_default_key)
+        except ValueError as e:
+            raise ValueError(f"[default_key] {e}")
 
-        options["default_key"] = parse_layer_key(raw_default_key)
+        options["default_key"] = default_key
 
     return Layer(base_color, layer_map, **options)
-
-
-def parse_layer_key(raw_layer_key: Union[str, Dict]) -> ColoredLayerKey:
-    """Parse a LayerKey."""
-    if isinstance(raw_layer_key, str):
-        raw_layer_key = {"key": raw_layer_key}
-
-    raw_key = raw_layer_key.get("key")
-    if raw_key is None:
-        raise ValueError(f"Key {raw_key} does not specify a mapped key")
-
-    layer_base_key = LayerBaseKey[raw_key]
-
-    options = {}
-
-    color = raw_layer_key.get("color")
-
-    for option in (
-        "ctrl",
-        "alt",
-        "alt_gr",
-        "gui",
-        "modify_when_held",
-        "layer_shift_when_held",
-    ):
-        raw_option = raw_layer_key.get(option)
-        if raw_option is not None:
-            options[option] = raw_option
-
-    return ColoredLayerKey(layer_base_key, color, **options)
