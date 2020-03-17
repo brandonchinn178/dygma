@@ -1,25 +1,32 @@
 """Defines Layer, which contains information to configure a layer."""
 
-from typing import NamedTuple, Optional
-
 from .enums import LayerBaseKey
 
 
-class LayerKey(NamedTuple):
+class LayerKey:
     """Configuration for a specific key in a layer."""
 
-    key: LayerBaseKey
-    # defaults to layer's base_color
-    color: Optional[str] = None
-
-    # modifiers
-    ctrl: bool = False
-    shift: bool = False
-    alt: bool = False
-    alt_gr: bool = False
-    gui: bool = False
-    modify_when_held: bool = False
-    layer_shift_when_held: bool = False
+    def __init__(
+        self,
+        key: LayerBaseKey,
+        *,
+        ctrl=False,
+        shift=False,
+        alt=False,
+        alt_gr=False,
+        gui=False,
+        modify_when_held=False,
+        layer_shift_when_held=False,
+    ):
+        """Initialize a LayerKey."""
+        self._key = key
+        self._ctrl = ctrl
+        self._shift = shift
+        self._alt = alt
+        self._alt_gr = alt_gr
+        self._gui = gui
+        self._modify_when_held = modify_when_held
+        self._layer_shift_when_held = layer_shift_when_held
 
     @classmethod
     def from_key_code(cls, code: int) -> "LayerKey":
@@ -56,27 +63,26 @@ class LayerKey(NamedTuple):
                 f"Could not deserialize key code: {base_code} (calculated from {code})"
             )
 
-        # TODO: remove color
-        return cls(key, color=None, **options)
+        return cls(key, **options)
 
     def to_key_code(self) -> int:
         """Get the key code for this LayerKey."""
-        key = self.key
+        key = self._key
         code = KEY_CODES[key]
 
-        if self.ctrl:
+        if self._ctrl:
             code += 256
 
-        if self.alt:
+        if self._alt:
             code += 512
 
-        if self.alt_gr:
+        if self._alt_gr:
             code += 1024
 
-        if self.shift:
+        if self._shift:
             code += 2048
 
-        if self.gui:
+        if self._gui:
             code += 4096
 
         return code

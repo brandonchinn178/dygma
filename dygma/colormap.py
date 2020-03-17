@@ -1,9 +1,9 @@
 """Generate the color map specified by a palette and layer."""
 
-from typing import List, Mapping
+from typing import List, Mapping, Optional
 
 from .color import ColorName, ColorPalette
-from .keys import Key, LayerKey
+from .keys import Key
 from .serialize import Serializable
 
 
@@ -19,19 +19,28 @@ class ColorMap(Serializable):
     def from_layer(
         cls,
         palette: ColorPalette,
-        layer_map: Mapping[Key, LayerKey],
-        default_key: LayerKey,
+        layer_map: Mapping[Key, Optional[ColorName]],
         default_color: ColorName,
+        missing_color: ColorName,
     ) -> "ColorMap":
-        """Initialize a ColorMap from a Layer."""
+        """
+        Initialize a ColorMap from a Layer.
+
+        If the `layer_map` contains a Key mapped to None, then return the
+        `default_color`. If the `layer_map` does not contain a Key at all,
+        return the `missing_color`.
+        """
         color_map = {}
         for key in KEY_MAP:
             if key is None:
                 continue
 
-            color = layer_map.get(key, default_key).color
-            if color is None:
-                color = default_color
+            if key in layer_map:
+                color = layer_map[key]
+                if color is None:
+                    color = default_color
+            else:
+                color = missing_color
 
             color_map[key] = color
 

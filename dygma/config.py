@@ -6,7 +6,7 @@ import yaml
 
 from .color import COLOR_BLACK, Color, ColorPalette
 from .keys import Key, LayerBaseKey
-from .layer import EMPTY_LAYER, Layer, LayerKey
+from .layer import ColoredLayerKey, EMPTY_LAYER, Layer
 
 
 class Config(NamedTuple):
@@ -105,7 +105,7 @@ def parse_layer(raw_layer: Dict) -> Layer:
     return Layer(base_color, layer_map, **options)
 
 
-def parse_layer_key(raw_layer_key: Union[str, Dict]) -> LayerKey:
+def parse_layer_key(raw_layer_key: Union[str, Dict]) -> ColoredLayerKey:
     """Parse a LayerKey."""
     if isinstance(raw_layer_key, str):
         raw_layer_key = {"key": raw_layer_key}
@@ -118,9 +118,7 @@ def parse_layer_key(raw_layer_key: Union[str, Dict]) -> LayerKey:
 
     options = {}
 
-    raw_color = raw_layer_key.get("color")
-    if raw_color is not None:
-        options["color"] = raw_color
+    color = raw_layer_key.get("color")
 
     for option in (
         "ctrl",
@@ -134,4 +132,4 @@ def parse_layer_key(raw_layer_key: Union[str, Dict]) -> LayerKey:
         if raw_option is not None:
             options[option] = raw_option
 
-    return LayerKey(layer_base_key, **options)
+    return ColoredLayerKey(layer_base_key, color, **options)
