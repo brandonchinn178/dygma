@@ -133,17 +133,17 @@ KEY_CODES = {
     LayerBaseKey.DEL: 76,
     # INSERT
     LayerBaseKey.F1: 58,
-    # F2
-    # F3
-    # F4
-    # F5
-    # F6
-    # F7
-    # F8
-    # F9
-    # F10
-    # F11
-    # F12
+    LayerBaseKey.F2: 59,
+    LayerBaseKey.F3: 60,
+    LayerBaseKey.F4: 61,
+    LayerBaseKey.F5: 62,
+    LayerBaseKey.F6: 63,
+    LayerBaseKey.F7: 64,
+    LayerBaseKey.F8: 65,
+    LayerBaseKey.F9: 66,
+    LayerBaseKey.F10: 67,
+    LayerBaseKey.F11: 68,
+    LayerBaseKey.F12: 69,
     # F13
     # F14
     # F15
