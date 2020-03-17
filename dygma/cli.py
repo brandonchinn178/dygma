@@ -6,7 +6,10 @@ import argparse
 import logging
 from typing import Callable, Optional, TypeVar
 
-from dygma import DygmaConnection, discover_ports, read_config
+from .api import DygmaConnection
+from .config import read_config
+from .discover import discover_ports
+from .version import __version__
 
 
 logging.basicConfig(level=logging.DEBUG)
@@ -68,6 +71,10 @@ def sync(config_file: str, auto_select: bool):
 def main():
     """Run main function."""
     parser = argparse.ArgumentParser(description="Run actions using the Dygma API")
+    parser.add_argument(
+        "--version", help="Display the version and exit", action="store_true"
+    )
+
     subparsers = parser.add_subparsers()
 
     upload_parser = subparsers.add_parser(
@@ -85,6 +92,10 @@ def main():
     upload_parser.set_defaults(command="sync")
 
     args = parser.parse_args()
+
+    if args.version:
+        print(f"Dygma v{__version__}")
+        return
 
     if args.command == "sync":
         sync(args.file, args.yes)
