@@ -10,24 +10,25 @@ from .serialize import Serializable
 class ColorMap(Serializable):
     """A mapping of physical keys to a color."""
 
-    def __init__(self, palette: ColorPalette, color_map: Mapping[Key, ColorName]):
+    def __init__(self, palette: ColorPalette, color_map: Mapping[Key, ColorName], base_color: ColorName):
         """Initialize a ColorMap."""
         self._palette = palette
         self._color_map = color_map
+        self._base_color = base_color
 
     @classmethod
     def from_layer(
         cls,
         palette: ColorPalette,
         layer_map: Mapping[Key, Optional[ColorName]],
-        default_color: ColorName,
+        base_color: ColorName,
         missing_color: ColorName,
     ) -> "ColorMap":
         """
         Initialize a ColorMap from a Layer.
 
         If the `layer_map` contains a Key mapped to None, then return the
-        `default_color`. If the `layer_map` does not contain a Key at all,
+        `base_color`. If the `layer_map` does not contain a Key at all,
         return the `missing_color`.
         """
         color_map = {}
@@ -38,13 +39,13 @@ class ColorMap(Serializable):
             if key in layer_map:
                 color = layer_map[key]
                 if color is None:
-                    color = default_color
+                    color = base_color
             else:
                 color = missing_color
 
             color_map[key] = color
 
-        return cls(palette, color_map)
+        return cls(palette, color_map, base_color)
 
     @classmethod
     def deserialize(cls, palette: ColorPalette, data: List[int]) -> "ColorMap":
@@ -63,10 +64,10 @@ class ColorMap(Serializable):
         codes = []
         for key in KEY_MAP:
             if key is None:
-                codes.append(0)
-                continue
+                color_name = self._base_color
+            else:
+                color_name = self._color_map[key]
 
-            color_name = self._color_map[key]
             try:
                 x = self._palette.colors.index(color_name)
             except IndexError:
