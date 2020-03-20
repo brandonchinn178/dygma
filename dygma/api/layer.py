@@ -112,13 +112,13 @@ class Layer(NamedTuple):
     def get_colormap(self, palette: ColorPalette) -> ColorMap:
         """Get the ColorMap for this layer."""
         layer_map = {key: layer_key.color for key, layer_key in self.layer_map.items()}
-        default_color = self.base_color
+        base_color = self.base_color
         missing_color = self.default_key.color
 
         if missing_color is None:
             missing_color = COLOR_BLACK
 
-        return ColorMap.from_layer(palette, layer_map, default_color, missing_color)
+        return ColorMap.from_layer(palette, layer_map, base_color, missing_color)
 
 
 EMPTY_LAYER = Layer(base_color=COLOR_BLACK, layer_map={})
