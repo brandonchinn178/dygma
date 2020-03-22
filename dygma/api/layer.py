@@ -38,6 +38,7 @@ class ColoredLayerKey(LayerKey):
 
         for option in (
             "ctrl",
+            "shift",
             "alt",
             "alt_gr",
             "gui",
